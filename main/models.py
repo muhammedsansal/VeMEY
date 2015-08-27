@@ -101,7 +101,41 @@ class Device( models.Model ):
 	rack_last	= models.SmallIntegerField(null=True,blank=True)
 
 	def __str__( self ):
-		return "%s %s %s" % ( self.type , self.brand , self.model )
+		return "%s %s %s %s" % ( self.cabinet,  self.type , self.brand , self.model )
 	
 	class Meta:
 		verbose_name_plural = u"Devices"
+
+class PortType( models.Model ):
+
+	name		= models.CharField( max_length = 50 )
+
+	def __str__( self ):
+		return "%s" % ( self.name )
+	
+	class Meta:
+		verbose_name_plural = u"Port Types"
+
+class Port( models.Model ):
+
+	type		= models.ForeignKey( PortType )
+	device		= models.ForeignKey( Device )
+	name		= models.CharField( max_length = 20 )
+
+	def __str__( self ):
+		return "%s %s.Port (%s Type)" % ( self.device, self.name , self.type )
+	
+	class Meta:
+		verbose_name_plural = u"Ports"
+
+class Cabling( models.Model ):
+
+	name		= models.CharField( max_length = 50 )
+	edge1		= models.ForeignKey( Port , related_name='edge1' )
+	edge2		= models.ForeignKey( Port , related_name='edge2' )
+
+	def __str__( self ):
+		return "%s %s %s" % ( self.name,  self.edge1 , self.edge2 )
+	
+	class Meta:
+		verbose_name_plural = u"Cablings"
