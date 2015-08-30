@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block meta %}
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="robots" content="index,follow" />
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+			<h1>Data Center Room: {{data_center_room.name}} <small>{{data_center_room.building}}</small></h1>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Rows</h3>
+			</div>
+			<div class="panel-body">
+				{% for row in rows %}
+					<p><a href="{{row.get_absolute_url}}">{{row}}</a></p>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Cabinets</h3>
+			</div>
+			<div class="panel-body">
+				{% for cabinet in cabinets %}
+					<p><a href="{{cabinet.get_absolute_url}}">{{cabinet}}</a></p>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

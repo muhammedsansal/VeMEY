@@ -16,8 +16,15 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from main.views			import *
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+	url(r'^accounts/login/$', auth_views.login),
+	url(r'^logout/$'		, logout_page),
     url(r'^admin/', include(admin.site.urls)),
-	url(r'^$', home)
+	url(r'^$', home),
+	url(r'^dc/(?P<dc_id>\d+)/$'								, data_center_room),
+	url(r'^row/(?P<row_id>\d+)/$'								, row),
+	url(r'^cabinet/(?P<cabinet_id>\d+)/$'								, cabinet),
+	url(r'^device/(?P<device_id>\d+)/$'								, device),
 ]

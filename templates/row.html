@@ -9,14 +9,19 @@
 {% endblock %}
 {% block content %}
 <div class="row">
-	<div class="col-md-3">
+	<div class="col-md-12">
+		<div class="page-header">
+			<h1>Row: {{row.name}} <small>{{row.data_center_room}}</small></h1>
+		</div>
+	</div>
+	<div class="col-md-4">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Data Center Rooms</h3>
+				<h3 class="panel-title">Cabinets</h3>
 			</div>
 			<div class="panel-body">
-				{% for dc in dcs %}
-					<p><a href="{{dc.get_absolute_url}}">{{dc}}</a></p>
+				{% for cabinet in cabinets %}
+					<p><a href="{{cabinet.get_absolute_url}}">{{cabinet}}</a></p>
 				{% endfor %}
 			</div>
 		</div>

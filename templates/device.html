@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block meta %}
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="robots" content="index,follow" />
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+			<h1>Device: {{device.brand}} {{device.model}} {{device.type}} <small>{{device.cabinet}}</small></h1>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<p>Type: {{device.type}}</p>
+		<p>Brand: {{device.brand}}</p>
+		<p>Model: {{device.model}}</p>
+		<p>Serial: {{device.serial}}</p>
+		<p>Owner: {{device.owner}}</p>
+		<p>Manager: {{device.manager}}</p>
+		<p>Cabinet: {{device.cabinet}}</p>
+		<p>Rack: {{device.rack_first}}-{{device.rack_last}}</p>
+	</div>
+	<div class="col-md-12">
+		<h2>Reserved Ports</h2>
+		<table class="table table-bordered table-striped">
+			<tr>
+				<th>Type</th>
+				<th>Name</th>
+			</tr>
+			{% for port in reserved_ports %}
+				<tr>
+					<td>{{port.type}}</td>
+					<td>{{port.name}}</td>
+				</tr>
+			{% endfor %}
+		</table>
+		<h2>Non-Reserved Ports</h2>
+		<table class="table table-bordered table-striped">
+			<tr>
+				<th>Type</th>
+				<th>Name</th>
+			</tr>
+			{% for port in nonreserved_ports %}
+				<tr>
+					<td>{{port.type}}</td>
+					<td>{{port.name}}</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+{% endblock %}

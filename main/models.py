@@ -49,6 +49,9 @@ class DataCenterRoom( models.Model ):
 
 	building	= models.ForeignKey( Building )
 	name		= models.CharField( max_length = 50 )
+	
+	def get_absolute_url(self):
+		return "/dc/" + str(self.id) + "/"
 
 	def __str__( self ):
 		return "%s - %s" % ( self.building , self.name )
@@ -60,6 +63,9 @@ class Row( models.Model ):
 
 	datacenterroom		= models.ForeignKey( DataCenterRoom )
 	name		= models.CharField( max_length = 50 )
+	
+	def get_absolute_url(self):
+		return "/row/" + str(self.id) + "/"
 
 	def __str__( self ):
 		return "%s - %s" % ( self.datacenterroom , self.name )
@@ -71,6 +77,9 @@ class Cabinet( models.Model ):
 
 	row			= models.ForeignKey( Row )
 	name		= models.CharField( max_length = 50 )
+	
+	def get_absolute_url(self):
+		return "/cabinet/" + str(self.id) + "/"
 
 	def __str__( self ):
 		return "%s - %s" % ( self.row , self.name )
@@ -98,13 +107,17 @@ class Device( models.Model ):
 	manager		= models.ForeignKey( Company , related_name='manager' )
 	cabinet		= models.ForeignKey( Cabinet )
 	rack_first	= models.SmallIntegerField(default=1)
-	rack_last	= models.SmallIntegerField(null=True,blank=True)
+	rack_last	= models.SmallIntegerField()
+	
+	def get_absolute_url(self):
+		return "/device/" + str(self.id) + "/"
 
 	def __str__( self ):
 		return "%s %s %s %s" % ( self.cabinet,  self.type , self.brand , self.model )
 	
 	class Meta:
 		verbose_name_plural = u"Devices"
+		ordering = ('-rack_first',)
 
 class PortType( models.Model ):
 
