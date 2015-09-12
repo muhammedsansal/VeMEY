@@ -11,18 +11,47 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="page-header">
-			<h1>Device: {{device.brand}} {{device.model}} {{device.type}} <small>{{device.cabinet}}</small></h1>
+			<h1><small>Device</small> {{device.brand}} {{device.model}} {{device.type}} <small>{{device.cabinet}}</small></h1>
 		</div>
 	</div>
 	<div class="col-md-12">
-		<p>Type: {{device.type}}</p>
-		<p>Brand: {{device.brand}}</p>
-		<p>Model: {{device.model}}</p>
-		<p>Serial: {{device.serial}}</p>
-		<p>Owner: {{device.owner}}</p>
-		<p>Manager: {{device.manager}}</p>
-		<p>Cabinet: {{device.cabinet}}</p>
-		<p>Rack: {{device.rack_first}}-{{device.rack_last}}</p>
+		<table class="table table-bordered">
+			<tr>
+				<th>Type</th>
+				<td>{{device.type}}</td>
+			</tr>
+			<tr>
+				<th>Manufacturer</th>
+				<td>{{device.manufacturer}}</td>
+			</tr>
+			<tr>
+				<th>Model</th>
+				<td>{{device.model}}</td>
+			</tr>
+			<tr>
+				<th>Serial</th>
+				<td>{{device.serial}}</td>
+			</tr>
+			<tr>
+				<th>Owner</th>
+				<td>{{device.owner}}</td>
+			</tr>
+			<tr>
+				<th>Manager</th>
+				<td>{{device.manager}}</td>
+			</tr>
+			<tr>
+				<th>Cabinet</th>
+				<td>{{device.cabinet}}</td>
+			</tr>
+			<tr>
+				<th>Rack</th>
+				<td>{{device.rack_first}}-{{device.rack_last}}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-md-12" style="margin:10px;">
+		<a class="btn btn-primary btn-sm" href="{{device.get_absolute_url}}port/add/" role="button">Add Port</a>
 	</div>
 	<div class="col-md-12">
 		<h2>Reserved Ports</h2>
@@ -30,11 +59,13 @@
 			<tr>
 				<th>Type</th>
 				<th>Name</th>
+				<th>Edge</th>
 			</tr>
 			{% for port in reserved_ports %}
 				<tr>
 					<td>{{port.type}}</td>
-					<td>{{port.name}}</td>
+					<td><a href="{{port.get_absolute_url}}">{{port.name}}</a></td>
+					<td>{{port.find_connection_edge}}</td>
 				</tr>
 			{% endfor %}
 		</table>
@@ -47,7 +78,7 @@
 			{% for port in nonreserved_ports %}
 				<tr>
 					<td>{{port.type}}</td>
-					<td>{{port.name}}</td>
+					<td><a href="{{port.get_absolute_url}}">{{port.name}}</a></td>
 				</tr>
 			{% endfor %}
 		</table>

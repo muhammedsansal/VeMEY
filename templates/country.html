@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}{{country.iso_code}} {{country.name}}{% endblock %}
+{% block meta %}
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="robots" content="index,follow" />
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+			<h1>{{country.iso_code}} <small>{{country.name}}</small></h1>
+		</div>
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li><a href="/country/">Countries</a></li>
+			<li class="active">{{country.name}}</li>
+		</ol>
+	</div>
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Cities</h3>
+			</div>
+			<div class="panel-body">
+				<p><a class="btn btn-primary btn-sm" href="{{country.get_absolute_url}}city/add/" role="button">Add City</a></p>
+				{% if cities %}
+					{% for city in cities %}
+						<p><a href="{{city.get_absolute_url}}">{{city.name}}</a></p>
+					{% endfor %}
+				{% else %}
+					<i>No records</i>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

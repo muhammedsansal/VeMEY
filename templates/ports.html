@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Ports{% endblock %}
+{% block meta %}
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="robots" content="index,follow" />
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+			<h1>Ports</h1>
+		</div>
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li class="active">Ports</li>
+		</ol>
+	</div>
+	<div class="col-md-12">
+		<table class="table table-bordered table-striped">
+			<tr>
+				<th>Name</th>
+				<th>Type</th>
+				<th>Device</th>
+				<th>Is Paired</th>
+				<th>Data Center Room</th>
+				<th>Building</th>
+				<th>City</th>
+				<th>Country</th>
+				<th>Country ISO-Code</th>
+				<th>Update</th>
+			</tr>
+			{% for port in ports %}
+				<tr>
+					<td><a href="{{port.get_absolute_url}}">{{port.name}}</a></td>
+					<td>{{port.type}}</td>
+					<td>{{port.device.manufacturer}} {{port.device.model}}</td>
+					<td>{{port.is_paired}}</td>
+					<td>{{port.device.cabinet.row.datacenterroom.name}}</td>
+					<td>{{port.device.cabinet.row.datacenterroom.building.name}}</td>
+					<td>{{port.device.cabinet.row.datacenterroom.building.city.name}}</td>
+					<td>{{port.device.cabinet.row.datacenterroom.building.city.country.name}}</td>
+					<td>{{port.device.cabinet.row.datacenterroom.building.city.country.iso_code}}</td>
+					<td><a class="btn btn-primary btn-sm" href="{{port.get_absolute_url}}update/" role="button">Update</a></td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Devices{% endblock %}
+{% block meta %}
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="robots" content="index,follow" />
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+			<h1>Devices</h1>
+		</div>
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li class="active">Devices</li>
+		</ol>
+	</div>
+	<div class="col-md-12">
+		<p><a class="btn btn-primary btn-sm" href="{{device.get_absolute_url}}port/add/" role="button">Add Port</a></p>
+		<table class="table table-bordered table-striped">
+			<tr>
+				<th>Type</th>
+				<th>Manufacturer</th>
+				<th>Model</th>
+				<th>Serial</th>
+				<th>Owner</th>
+				<th>Manager</th>
+				<th>Cabinet</th>
+				<th>Rack</th>
+				<th>Data Center Room</th>
+				<th>Building</th>
+				<th>City</th>
+				<th>Country</th>
+				<th>Country ISO-Code</th>
+				<th>Update</th>
+			</tr>
+			{% for device in devices %}
+				<tr>
+					<td><a href="{{device.get_absolute_url}}">{{device.type}}</a></td>
+					<td>{{device.manufacturer}}</td>
+					<td>{{device.model}}</td>
+					<td>{{device.serial}}</td>
+					<td>{{device.owner}}</td>
+					<td>{{device.manager}}</td>
+					<td>{{device.cabinet.name}}</td>
+					<td>{{device.rack_first}}-{{device.rack_last}}</td>
+					<td>{{device.cabinet.row.datacenterroom.name}}</td>
+					<td>{{device.cabinet.row.datacenterroom.building.name}}</td>
+					<td>{{device.cabinet.row.datacenterroom.building.city.name}}</td>
+					<td>{{device.cabinet.row.datacenterroom.building.city.country.name}}</td>
+					<td>{{device.cabinet.row.datacenterroom.building.city.country.iso_code}}</td>
+					<td><a class="btn btn-primary btn-sm" href="{{device.get_absolute_url}}update/" role="button">Update</a></td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+{% endblock %}

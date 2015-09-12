@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Port Types{% endblock %}
+{% block meta %}
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="robots" content="index,follow" />
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+			<h1>Port Types</h1>
+		</div>
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li class="active">Port Types</li>
+		</ol>
+	</div>
+	<div class="col-md-12" style="margin:10px;">
+		<a class="btn btn-primary btn-sm" href="/port-type/add/" role="button">Add Port Type</a>
+	</div>
+	<div class="col-md-12">
+		<table class="table table-bordered table-striped">
+			<tr>
+				<th>Name</th>
+				<th>Update</th>
+			</tr>
+			{% for port_type in port_types %}
+				<tr>
+					<td><a href="{{port_type.get_absolute_url}}">{{port_type.name}}</a></td>
+					<td><a class="btn btn-primary btn-sm" href="{{port_type.get_absolute_url}}update/" role="button">Update</a></td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+{% endblock %}

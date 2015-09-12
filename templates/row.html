@@ -11,18 +11,32 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="page-header">
-			<h1>Row: {{row.name}} <small>{{row.data_center_room}}</small></h1>
+			<h1>{{row.name}} <small>{{row.datacenterroom.name}}</small></h1>
 		</div>
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li><a href="/country/">Countries</a></li>
+			<li><a href="{{row.datacenterroom.building.city.country.get_absolute_url}}">{{row.datacenterroom.building.city.country.name}}</a></li>
+			<li><a href="{{row.datacenterroom.building.city.get_absolute_url}}">{{row.datacenterroom.building.city.name}}</a></li>
+			<li><a href="{{row.datacenterroom.building.get_absolute_url}}">{{row.datacenterroom.building.name}}</a></li>
+			<li><a href="{{row.datacenterroom.building.get_absolute_url}}">{{row.datacenterroom.name}}</a></li>
+			<li class="active">{{row.name}}</li>
+		</ol>
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-3">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">Cabinets</h3>
 			</div>
 			<div class="panel-body">
-				{% for cabinet in cabinets %}
-					<p><a href="{{cabinet.get_absolute_url}}">{{cabinet}}</a></p>
-				{% endfor %}
+				<p><a class="btn btn-primary btn-sm" href="{{row.get_absolute_url}}cabinet/add/" role="button">Add Cabinet</a></p>
+				{% if cabinets %}
+					{% for cabinet in cabinets %}
+						<p><a href="{{cabinet.get_absolute_url}}">{{cabinet.name}}</a></p>
+					{% endfor %}
+				{% else %}
+					<i>No records</i>
+				{% endif %}
 			</div>
 		</div>
 	</div>

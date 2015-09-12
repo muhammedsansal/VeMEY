@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Rows{% endblock %}
+{% block meta %}
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="robots" content="index,follow" />
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+			<h1>Cabinets</h1>
+		</div>
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li class="active">Cabinets</li>
+		</ol>
+	</div>
+	<div class="col-md-12">
+		<table class="table table-bordered table-striped">
+			<tr>
+				<th>Name</th>
+				<th>Model</th>
+				<th>Height</th>
+				<th>Date</th>
+				<th>Owner</th>
+				<th>Manager</th>
+				<th>Row</th>
+				<th>Data Center Room</th>
+				<th>Building</th>
+				<th>City</th>
+				<th>Country</th>
+				<th>Country ISO-Code</th>
+				<th>Update</th>
+			</tr>
+			{% for cabinet in cabinets %}
+				<tr>
+					<td><a href="{{cabinet.get_absolute_url}}">{{cabinet.name}}</a></td>
+					<td>{{cabinet.model}}</td>
+					<td>{{cabinet.height}}</td>
+					<td>{{cabinet.date}}</td>
+					<td>{{cabinet.owner}}</td>
+					<td>{{cabinet.manager}}</td>
+					<td>{{cabinet.row.name}}</td>
+					<td>{{cabinet.row.datacenterroom.name}}</td>
+					<td>{{cabinet.row.datacenterroom.building.name}}</td>
+					<td>{{cabinet.row.datacenterroom.building.city.name}}</td>
+					<td>{{cabinet.row.datacenterroom.building.city.country.name}}</td>
+					<td>{{cabinet.row.datacenterroom.building.city.country.iso_code}}</td>
+					<td><a class="btn btn-primary btn-sm" href="{{cabinet.get_absolute_url}}update/" role="button">Update</a></td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Countries{% endblock %}
+{% block meta %}
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="robots" content="index,follow" />
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+			<h1>Countries</h1>
+		</div>
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li class="active">Countries</li>
+		</ol>
+	</div>
+	<div class="col-md-12" style="margin:10px;">
+		<a class="btn btn-primary btn-sm" href="/country/add/" role="button">Add Country</a>
+	</div>
+	<div class="col-md-12">
+		<table class="table table-bordered table-striped">
+			<tr>
+				<th>Name</th>
+				<th>ISO-Code</th>
+				<th>Update</th>
+			</tr>
+			{% for country in countries %}
+				<tr>
+					<td><a href="{{country.get_absolute_url}}">{{country.name}}</a></td>
+					<td>{{country.iso_code}}</td>
+					<td><a class="btn btn-primary btn-sm" href="{{country.get_absolute_url}}update/" role="button">Update</a></td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+{% endblock %}

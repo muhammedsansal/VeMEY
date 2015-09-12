@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{city.name}}{% endblock %}
+{% block meta %}
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="robots" content="index,follow" />
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+			<h1>{{city.name}} <small>{{city.country.name}}</small></h1>
+		</div>
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li><a href="/country/">Countries</a></li>
+			<li><a href="{{city.country.get_absolute_url}}">{{city.country.name}}</a></li>
+			<li class="active">{{city.name}}</li>
+		</ol>
+	</div>
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Buildings</h3>
+			</div>
+			<div class="panel-body">
+				<p><a class="btn btn-primary btn-sm" href="{{city.get_absolute_url}}building/add/" role="button">Add Building</a></p>
+				{% if buildings %}
+					{% for building in buildings %}
+						<p><a href="{{building.get_absolute_url}}">{{building.name}}</a></p>
+					{% endfor %}
+				{% else %}
+					<i>No records</i>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

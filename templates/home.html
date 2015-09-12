@@ -12,6 +12,19 @@
 	<div class="col-md-3">
 		<div class="panel panel-default">
 			<div class="panel-heading">
+				<h3 class="panel-title">Companies</h3>
+			</div>
+			<div class="panel-body">
+				<a class="btn btn-primary btn-sm" href="/company/add/" role="button">Add Company</a>
+				{% for company in companies %}
+					<p><a href="{{company.get_absolute_url}}">{{company}}</a></p>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
 				<h3 class="panel-title">Data Center Rooms</h3>
 			</div>
 			<div class="panel-body">

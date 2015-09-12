@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Data Center Rooms{% endblock %}
+{% block meta %}
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="robots" content="index,follow" />
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+			<h1>Data Center Rooms</h1>
+		</div>
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li class="active">Data Center Rooms</li>
+		</ol>
+	</div>
+	<div class="col-md-12">
+		<table class="table table-bordered table-striped">
+			<tr>
+				<th>Name</th>
+				<th>m2</th>
+				<th>Owner</th>
+				<th>Manager</th>
+				<th>Building</th>
+				<th>City</th>
+				<th>Country</th>
+				<th>Country ISO-Code</th>
+				<th>Update</th>
+			</tr>
+			{% for datacenterroom in datacenterrooms %}
+				<tr>
+					<td><a href="{{datacenterroom.get_absolute_url}}">{{datacenterroom.name}}</a></td>
+					<td>{{datacenterroom.square_meter}}</td>
+					<td>{{datacenterroom.owner}}</td>
+					<td>{{datacenterroom.manager}}</td>
+					<td>{{datacenterroom.building.name}}</td>
+					<td>{{datacenterroom.building.city.name}}</td>
+					<td>{{datacenterroom.building.city.country.name}}</td>
+					<td>{{datacenterroom.building.city.country.iso_code}}</td>
+					<td><a class="btn btn-primary btn-sm" href="{{datacenterroom.get_absolute_url}}update/" role="button">Update</a></td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+{% endblock %}

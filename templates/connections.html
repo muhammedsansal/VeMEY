@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Connections{% endblock %}
+{% block meta %}
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="robots" content="index,follow" />
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+			<h1>Connections</h1>
+		</div>
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li class="active">Connections</li>
+		</ol>
+	</div>
+	<div class="col-md-12">
+		<table class="table table-bordered table-striped">
+			<tr>
+				<th>Name</th>
+				<th>Edge 1</th>
+				<th>Edge 2</th>
+			</tr>
+			{% for connection in connections %}
+				<tr>
+					<td><a href="{{connection.get_absolute_url}}">{{connection.name}}</a></td>
+					<td>{{connection.edge1}}</td>
+					<td>{{connection.edge2}}</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+{% endblock %}

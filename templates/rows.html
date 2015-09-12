@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Rows{% endblock %}
+{% block meta %}
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="robots" content="index,follow" />
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+			<h1>Rows</h1>
+		</div>
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li class="active">Rows</li>
+		</ol>
+	</div>
+	<div class="col-md-12">
+		<table class="table table-bordered table-striped">
+			<tr>
+				<th>Name</th>
+				<th>Data Center Room</th>
+				<th>Building</th>
+				<th>City</th>
+				<th>Country</th>
+				<th>Country ISO-Code</th>
+				<th>Update</th>
+			</tr>
+			{% for row in rows %}
+				<tr>
+					<td><a href="{{row.get_absolute_url}}">{{row.name}}</a></td>
+					<td>{{row.datacenterroom.name}}</td>
+					<td>{{row.datacenterroom.building.name}}</td>
+					<td>{{row.datacenterroom.building.city.name}}</td>
+					<td>{{row.datacenterroom.building.city.country.name}}</td>
+					<td>{{row.datacenterroom.building.city.country.iso_code}}</td>
+					<td><a class="btn btn-primary btn-sm" href="{{row.get_absolute_url}}update/" role="button">Update</a></td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+{% endblock %}

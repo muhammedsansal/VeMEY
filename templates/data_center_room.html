@@ -11,8 +11,16 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="page-header">
-			<h1>Data Center Room: {{data_center_room.name}} <small>{{data_center_room.building}}</small></h1>
+			<h1>{{data_center_room.name}} <small>{{data_center_room.building.name}}</small></h1>
 		</div>
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li><a href="/country/">Countries</a></li>
+			<li><a href="{{data_center_room.building.city.country.get_absolute_url}}">{{data_center_room.building.city.country.name}}</a></li>
+			<li><a href="{{data_center_room.building.city.get_absolute_url}}">{{data_center_room.building.city.name}}</a></li>
+			<li><a href="{{data_center_room.building.get_absolute_url}}">{{data_center_room.building.name}}</a></li>
+			<li class="active">{{data_center_room.name}}</li>
+		</ol>
 	</div>
 	<div class="col-md-3">
 		<div class="panel panel-default">
@@ -20,21 +28,30 @@
 				<h3 class="panel-title">Rows</h3>
 			</div>
 			<div class="panel-body">
-				{% for row in rows %}
-					<p><a href="{{row.get_absolute_url}}">{{row}}</a></p>
-				{% endfor %}
+				<p><a class="btn btn-primary btn-sm" href="{{data_center_room.get_absolute_url}}row/add/" role="button">Add Row</a></p>
+				{% if rows %}
+					{% for row in rows %}
+						<p><a href="{{row.get_absolute_url}}">{{row.name}}</a></p>
+					{% endfor %}
+				{% else %}
+					<i>No records</i>
+				{% endif %}
 			</div>
 		</div>
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-3">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">Cabinets</h3>
 			</div>
 			<div class="panel-body">
-				{% for cabinet in cabinets %}
-					<p><a href="{{cabinet.get_absolute_url}}">{{cabinet}}</a></p>
-				{% endfor %}
+				{% if cabinets %}
+					{% for cabinet in cabinets %}
+						<p><a href="{{cabinet.get_absolute_url}}">{{cabinet.name}}</a></p>
+					{% endfor %}
+				{% else %}
+					<i>No records</i>
+				{% endif %}
 			</div>
 		</div>
 	</div>

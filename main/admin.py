@@ -28,7 +28,7 @@ class DeviceTypeAdmin(admin.ModelAdmin):
 	list_display	= ( 'name', )
 
 class DeviceAdmin(admin.ModelAdmin):
-	list_display	= ( 'brand', 'model', 'type', 'serial', 'owner', 'manager', 'cabinet', 'rack_first', 'rack_last')
+	list_display	= ( 'manufacturer', 'model', 'type', 'serial', 'owner', 'manager', 'cabinet', 'rack_first', 'rack_last')
 
 class PortTypeAdmin(admin.ModelAdmin):
 	list_display	= ( 'name', )
@@ -36,7 +36,7 @@ class PortTypeAdmin(admin.ModelAdmin):
 class PortAdmin(admin.ModelAdmin):
 	list_display	= ( 'name', 'type', 'device' )
 
-class CablingAdmin(admin.ModelAdmin):
+class ConnectionAdmin(admin.ModelAdmin):
 	list_display	= ( 'name', 'edge1', 'edge2' )
 
 admin.site.register( Company, CompanyAdmin )
@@ -50,4 +50,4 @@ admin.site.register( DeviceType, DeviceTypeAdmin )
 admin.site.register( Device, DeviceAdmin )
 admin.site.register( PortType, PortTypeAdmin )
 admin.site.register( Port, PortAdmin )
-admin.site.register( Cabling, CablingAdmin )
+admin.site.register( Connection, ConnectionAdmin )
