@@ -110,7 +110,8 @@ class DeviceCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
         super(DeviceCreateForm, self).__init__(*args, **kwargs)
-        self.fields['type'].widget.attrs.update({'class': 'form-control', 'autofocus': 'autofocus'})
+        self.fields['name'].widget.attrs.update({'class': 'form-control', 'autofocus': 'autofocus'})
+        self.fields['type'].widget.attrs.update({'class': 'form-control', })
         self.fields['manufacturer'].widget.attrs.update({'class': 'form-control', })
         self.fields['model'].widget.attrs.update({'class': 'form-control', })
         self.fields['serial'].widget.attrs.update({'class': 'form-control', })

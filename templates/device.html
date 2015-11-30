@@ -17,6 +17,10 @@
 	<div class="col-md-12">
 		<table class="table table-bordered">
 			<tr>
+				<th>Name</th>
+				<td>{{device.name}}</td>
+			</tr>
+            <tr>
 				<th>Type</th>
 				<td>{{device.type}}</td>
 			</tr>
@@ -61,7 +65,7 @@
 				<th>Name</th>
 				<th>Edge</th>
 			</tr>
-			{% for port in reserved_ports %}
+			{% for port in device.find_ports %}
 				<tr>
 					<td>{{port.type}}</td>
 					<td><a href="{{port.get_absolute_url}}">{{port.name}}</a></td>

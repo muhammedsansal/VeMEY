@@ -126,6 +126,7 @@ class DeviceType(models.Model):
 
 
 class Device(models.Model):
+    name = models.CharField(max_length=50)
     type = models.ForeignKey(DeviceType)
     manufacturer = models.CharField(max_length=50)
     model = models.CharField(max_length=50)
@@ -145,6 +146,20 @@ class Device(models.Model):
     class Meta:
         verbose_name_plural = u"Devices"
         ordering = ('-rack_first',)
+
+    def find_ports(self):
+        device=self
+        try:
+            my_ports = list(Port.objects.filter(Q(device=device)))
+        except:
+            my_ports = []
+        return my_ports
+
+    def find_reserved_ports(self):
+        pass
+
+    def find_unreserved_ports(self):
+        pass
 
 
 class PortType(models.Model):
