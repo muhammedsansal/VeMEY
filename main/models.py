@@ -1,7 +1,7 @@
 from django.db import models
-from    django.db.models.signals import post_save
-from    django.dispatch.dispatcher import receiver
-from    django.db.models import Q
+from django.db.models.signals import post_save
+from django.dispatch.dispatcher import receiver
+from django.db.models import Q
 import datetime
 
 
@@ -140,7 +140,7 @@ class Device(models.Model):
         return "/device/" + str(self.id) + "/"
 
     def __str__(self):
-        return "%s %s %s %s" % (self.cabinet, self.type, self.brand, self.model)
+        return "%s %s %s %s" % (self.cabinet, self.type, self.manufacturer, self.model)
 
     class Meta:
         verbose_name_plural = u"Devices"
@@ -177,7 +177,6 @@ class Port(models.Model):
         verbose_name_plural = u"Ports"
 
     def find_connections(self):
-
         dedicated_cablings = []
         target_port = self
         cabling = self.get_single_cabling(target_port, dedicated_cablings)
@@ -199,7 +198,6 @@ class Port(models.Model):
         return dedicated_cablings
 
     def find_connection_edge(self):
-
         dedicated_cablings = []
         target_port = self
         cabling = self.get_single_cabling(target_port, dedicated_cablings)
@@ -222,7 +220,7 @@ class Port(models.Model):
 
     def get_single_cabling(self, port, dedicated_cablings):
         try:
-            all_filtered_cablings = list(Cabling.objects.filter(Q(edge1=port) | Q(edge2=port)))
+            all_filtered_cablings = list(Connection.objects.filter(Q(edge1=port) | Q(edge2=port)))
         except:
             all_filtered_cablings = []
 
@@ -252,7 +250,7 @@ def port_post_save(sender, **kwargs):
 
 class Connection(models.Model):
     name = models.CharField(max_length=50)
-    edge1 = models.ForeignKey(Port, related_name='edge1')
+    edge1 = models.ForeignKey(Port)
     edge2 = models.ForeignKey(Port, related_name='edge2')
 
     def get_absolute_url(self):

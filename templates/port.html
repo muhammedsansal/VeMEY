@@ -47,6 +47,7 @@
 		</table>
 	</div>
 	<div class="col-md-12">
+        <p><a class="btn btn-primary btn-sm" href="{{device.get_absolute_url}}connection/add/" role="button">Add Connection</a></p>
 		<h2>Connections</h2>
 		<table class="table table-bordered table-striped">
 			<tr>
@@ -54,13 +55,17 @@
 				<th>Edge 1</th>
 				<th>Edge 2</th>
 			</tr>
-			{% for connection in connections %}
-				<tr>
-					<td>{{connection.name}}</td>
-					<td>{{connection.edge1}}</td>
-					<td>{{connection.edge2}}</td>
-				</tr>
-			{% endfor %}
+            {% if  port.find_connections %}
+			    {% for connection in port.find_connections %}
+				    <tr>
+                        <td>{{connection.name}}</td>
+                        <td>{{connection.edge1}}</td>
+                        <td>{{connection.edge2}}</td>
+                    </tr>
+			    {% endfor %}
+            {% else %}
+                <i> No records </i>
+            {% endif %}
 		</table>
 	</div>
 </div>

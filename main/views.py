@@ -462,8 +462,22 @@ def connections(request):
 
 @login_required
 def connection(request, connection_id):
-    connection = get_object_or_404(Connection, id=int(port_id))
+    connection = get_object_or_404(Connection, id=int(connection_id))
 
-    variables = RequestContext(request, {'connection': connection, })
+    variables = RequestContext(request, {'connection': connection, })   # burası kontrol edilmeli
 
     return render_to_response('connection.html', variables)
+
+
+class ConnectionCreate(SuccessMessageMixin, CreateView):
+    model = Connection
+    form_class = ConnectionCreateForm
+    template_name = 'connection_create.html'
+    success_message = u"Created."
+
+    def form_valid(self, form):
+        #
+        # Sets country field of city
+        #
+        form.instance.edge1 = get_object_or_404(Port, pk=self.kwargs['port_id'])
+        return super(ConnectionCreate, self).form_valid(form)

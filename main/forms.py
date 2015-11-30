@@ -142,3 +142,17 @@ class PortCreateForm(forms.ModelForm):
         self.fields['type'].widget.attrs.update({'class': 'form-control', 'autofocus': 'autofocus'})
         self.fields['name'].widget.attrs.update({'class': 'form-control', })
         self.fields['is_paired'].widget.attrs.update({'class': 'form-control', })
+
+
+class ConnectionCreateForm(forms.ModelForm):
+    class Meta:
+        model = Connection
+        exclude = ['edge1']
+
+    def  __init__(self, *args, **kwargs):
+        kwargs.setdefault('label_suffix', '')
+        super(ConnectionCreateForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({'class': 'form-control', 'autofocus': 'autofocus'})
+        #self.fields['edge1'].widget.attrs.update({'class': 'form-control', })
+        self.fields['edge2'].widget.attrs.update({'class': 'form-control', })
+
