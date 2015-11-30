@@ -19,12 +19,14 @@
 		</ol>
 	</div>
 	<div class="col-md-12">
+    {% if connections  %}
 		<table class="table table-bordered table-striped">
 			<tr>
 				<th>Name</th>
 				<th>Edge 1</th>
 				<th>Edge 2</th>
 			</tr>
+
 			{% for connection in connections %}
 				<tr>
 					<td><a href="{{connection.get_absolute_url}}">{{connection.name}}</a></td>
@@ -32,7 +34,10 @@
 					<td>{{connection.edge2}}</td>
 				</tr>
 			{% endfor %}
-		</table>
-	</div>
+        </table>
+    {% else %}
+        <i> No records </i>
+    {%  endif %}
+    </div>
 </div>
 {% endblock %}
