@@ -14,7 +14,7 @@ class Company(models.Model):
         return "/company/" + str(self.id) + "/"
 
     def __str__(self):
-        return "%s" % (self.name)
+        return "%s" % self.name
 
     class Meta:
         verbose_name_plural = u"Companies"
@@ -28,7 +28,7 @@ class Country(models.Model):
         return "/country/" + str(self.id) + "/"
 
     def __str__(self):
-        return "%s" % (self.iso_code)
+        return "%s" % self.iso_code
 
     class Meta:
         verbose_name_plural = u"Countries"
@@ -121,7 +121,7 @@ class DeviceType(models.Model):
         return "/device-type/" + str(self.id) + "/"
 
     def __str__(self):
-        return "%s" % (self.name)
+        return "%s" % self.name
 
     class Meta:
         verbose_name_plural = u"Device Types"
@@ -173,7 +173,7 @@ class PortType(models.Model):
         return "/port-type/" + str(self.id) + "/"
 
     def __str__(self):
-        return "%s" % (self.name)
+        return "%s" % self.name
 
     class Meta:
         verbose_name_plural = u"Port Types"
@@ -199,7 +199,7 @@ class Port(models.Model):
         dedicated_cablings = []
         target_port = self
         cabling = self.get_single_cabling(target_port, dedicated_cablings)
-        while (cabling != None):
+        while cabling is not None:
             dedicated_cablings.append(cabling)
             if cabling.edge1 == target_port:
                 target_port = cabling.edge2
@@ -208,8 +208,8 @@ class Port(models.Model):
             else:
                 pass
 
-            if target_port.is_paired == True:
-                if target_port.pair_port != None:
+            if target_port.is_paired:
+                if target_port.pair_port is None:
                     target_port = target_port.pair_port
 
             cabling = self.get_single_cabling(target_port, dedicated_cablings)
@@ -235,10 +235,10 @@ class Port(models.Model):
 
             # if the new target_port has a pair, assign the pair port to 'target_port'
             # so loop will find the next cabling (connection).
-            if target_port.is_paired == True:
+            if target_port.is_paired:
                 # pair port is not connected. the loop reached its final destination.
                 # target_port is the last node of connection. let's break the loop.
-                if target_port.pair_port == None:
+                if target_port.pair_port is None:
                     break
                 # pair port is assigned to target_port. on the next step, the new cabling
                 # will be discovered.
@@ -268,12 +268,12 @@ class Port(models.Model):
 def port_post_save(sender, **kwargs):
     # the object which is deleted can be accessed via kwargs 'instance' key.
     obj = kwargs['instance']
-    if (obj.is_paired == False):
-        if (obj.pair_port != None):
+    if not obj.is_paired:
+        if obj.pair_port is not None:
             port = obj.pair_port
             port.delete()
-    elif (obj.is_paired == True):
-        if (obj.pair_port == None):
+    elif obj.is_paired:
+        if obj.pair_port is None:
             new_pair_port = Port(type=obj.type, device=obj.device, name=obj.name + " (pair)", is_paired=True,
                                  pair_port=obj)
             new_pair_port.save()

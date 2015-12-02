@@ -62,14 +62,14 @@
 		<table class="table table-bordered table-striped">
 			<tr>
 				<th>Type</th>
-				<th>Name</th>
-				<th>Edge</th>
+				<th>Local Port</th>
+				<th>Connected Port</th>
 			</tr>
-			{% for port in device.find_ports %}
+			{% for port in device.find_ports %}   <!--buradaki fonksiyon hatalı, reserved_ports olmalı, ama tabii reserved_ports calismiyor henuz -->
 				<tr>
 					<td>{{port.type}}</td>
-					<td><a href="{{port.get_absolute_url}}">{{port.name}}</a></td>
-					<td>{{port.find_connection_edge}}</td>
+					<td><a href="{{port.get_absolute_url}}" title="{{port}}">{{port.name}}</a></td>
+					<td><a href="{{port.find_connection_edge.get_absolute_url}}" title="{{port.find_connection_edge}}">{{port.find_connection_edge.name}}</a></td>
 				</tr>
 			{% endfor %}
 		</table>
@@ -82,7 +82,7 @@
 			{% for port in unreserved_ports %}
 				<tr>
 					<td>{{port.type}}</td>
-					<td><a href="{{port.get_absolute_url}}">{{port.name}}</a></td>
+					<td><a href="{{port.get_absolute_url}}" title="{{port}}">{{port.name}}</a></td>
 				</tr>
 			{% endfor %}
 		</table>

@@ -53,15 +53,15 @@
             <table class="table table-bordered table-striped">
                 <tr>
                     <th>Name</th>
-                    <th>Edge 1</th>
-                    <th>Edge 2</th>
+                    <th>Connected Port</th>
+                    <!--<th>Edge 2</th>-->
                 </tr>
 
-                    {% for connection in port.find_connections %}
+                    {% for connection in port.find_connections %}  <!-- bu blok dogru calismiyor, mailde anlattigim gibi duzenlemeler lazim-->
                         <tr>
                             <td><a href="{{connection.get_absolute_url}}">{{connection.name}}</a></td>
-                            <td>{{connection.edge1}}</td>
-                            <td>{{connection.edge2}}</td>
+                            <!--<td> {# {{ connection.edge1 }} #}  </td>-->
+                            <td><a href="{{connection.edge2.get_absolute_url}}" title="{{connection.edge2}}">{{connection.edge2.name}}</a></td>
                         </tr>
                     {% endfor %}
             </table>

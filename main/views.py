@@ -277,6 +277,7 @@ class RowUpdate(SuccessMessageMixin, UpdateView):
     template_name = 'row_create.html'
     success_message = u"Updated."
 
+
 @login_required
 def rows(request):
     try:
@@ -322,6 +323,7 @@ class CabinetUpdate(SuccessMessageMixin, UpdateView):
     form_class = CabinetCreateForm
     template_name = 'cabinet_create.html'
     success_message = u"Updated."
+
 
 @login_required
 def cabinets(request):
@@ -429,6 +431,7 @@ class DeviceCreate(SuccessMessageMixin, CreateView):
         form.instance.cabinet = get_object_or_404(Cabinet, pk=self.kwargs['cabinet_id'])
         return super(DeviceCreate, self).form_valid(form)
 
+
 class DeviceUpdate(SuccessMessageMixin, UpdateView):
     model = Device
     form_class = DeviceCreateForm
@@ -495,11 +498,13 @@ class PortCreate(SuccessMessageMixin, CreateView):
         form.instance.device = get_object_or_404(Device, pk=self.kwargs['device_id'])
         return super(PortCreate, self).form_valid(form)
 
+
 class PortUpdate(SuccessMessageMixin, UpdateView):
     model = Port
     form_class = PortCreateForm
     template_name = 'port_create.html'
     success_message = u"Updated."
+
 
 @login_required
 def ports(request):
