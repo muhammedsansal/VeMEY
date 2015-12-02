@@ -41,11 +41,13 @@ class CompanyCreate(CreateView):
     template_name = 'company_create.html'
     success_message = u"Created."
 
+
 class CompanyUpdate(SuccessMessageMixin, UpdateView):
     model = Company
     form_class = CompanyCreateForm
     template_name = 'company_create.html'
     success_message = u"Updated."
+
 
 @login_required
 def companies(request):
@@ -122,11 +124,13 @@ class CityCreate(SuccessMessageMixin, CreateView):
         form.instance.country = get_object_or_404(Country, pk=self.kwargs['country_id'])
         return super(CityCreate, self).form_valid(form)
 
+
 class CityUpdate(SuccessMessageMixin, UpdateView):
     model = City
     form_class = CityCreateForm
     template_name = 'city_create.html'
     success_message = u"Updated."
+
 
 @login_required
 def city_detail(request, city_id):
@@ -167,11 +171,13 @@ class BuildingCreate(SuccessMessageMixin, CreateView):
         form.instance.city = get_object_or_404(City, pk=self.kwargs['city_id'])
         return super(BuildingCreate, self).form_valid(form)
 
+
 class BuildingUpdate(SuccessMessageMixin, UpdateView):
     model = Building
     form_class = BuildingCreateForm
     template_name = 'building_create.html'
     success_message = u"Updated."
+
 
 @login_required
 def buildings(request):
@@ -212,11 +218,13 @@ class DataCenterRoomCreate(SuccessMessageMixin, CreateView):
         form.instance.building = get_object_or_404(Building, pk=self.kwargs['building_id'])
         return super(DataCenterRoomCreate, self).form_valid(form)
 
+
 class DataCenterRoomUpdate(SuccessMessageMixin, UpdateView):
     model = DataCenterRoom
     form_class = DataCenterRoomCreateForm
     template_name = 'datacenterroom_create.html'
     success_message = u"Updated."
+
 
 @login_required
 def datacenterrooms(request):
@@ -262,6 +270,7 @@ class RowCreate(SuccessMessageMixin, CreateView):
         form.instance.datacenterroom = get_object_or_404(DataCenterRoom, pk=self.kwargs['dc_id'])
         return super(RowCreate, self).form_valid(form)
 
+
 class RowUpdate(SuccessMessageMixin, UpdateView):
     model = Row
     form_class = RowCreateForm
@@ -306,6 +315,7 @@ class CabinetCreate(SuccessMessageMixin, CreateView):
         #
         form.instance.row = get_object_or_404(Row, pk=self.kwargs['row_id'])
         return super(CabinetCreate, self).form_valid(form)
+
 
 class CabinetUpdate(SuccessMessageMixin, UpdateView):
     model = Cabinet
@@ -357,11 +367,13 @@ class DeviceTypeCreate(SuccessMessageMixin, CreateView):
     template_name = 'device_type_create.html'
     success_message = u"Created."
 
+
 class DeviceTypeUpdate(SuccessMessageMixin, UpdateView):
     model = DeviceType
     form_class = DeviceTypeCreateForm
     template_name = 'device_type_create.html'
     success_message = u"Updated."
+
 
 @login_required
 def device_type(request, device_type_id):
@@ -382,12 +394,12 @@ def device(request, device_id):
         reserved_ports = []
 
     try:
-        nonreserved_ports = Port.objects.filter(Q(device=device), Q(edge1__isnull=True) & Q(edge2__isnull=True))
+        unreserved_ports = Port.objects.filter(Q(device=device), Q(edge1__isnull=True) & Q(edge2__isnull=True))
     except:
-        nonreserved_ports = []
+        unreserved_ports = []
 
     variables = RequestContext(request, {'device': device, 'reserved_ports': reserved_ports,
-                                         'nonreserved_ports': nonreserved_ports})
+                                         'unreserved_ports': unreserved_ports})
 
     return render_to_response('device.html', variables)
 
@@ -423,6 +435,7 @@ class DeviceUpdate(SuccessMessageMixin, UpdateView):
     template_name = 'device_create.html'
     success_message = u"Updated."
 
+
 @login_required
 def port_types(request):
     try:
@@ -441,11 +454,13 @@ class PortTypeCreate(SuccessMessageMixin, CreateView):
     template_name = 'port_type_create.html'
     success_message = u"Created."
 
+
 class PortTypeUpdate(SuccessMessageMixin, UpdateView):
     model = PortType
     form_class = PortTypeCreateForm
     template_name = 'port_type_create.html'
     success_message = u"Updated."
+
 
 @login_required
 def port_type(request, port_type_id):

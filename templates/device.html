@@ -73,13 +73,13 @@
 				</tr>
 			{% endfor %}
 		</table>
-		<h2>Non-Reserved Ports</h2>
+		<h2>Unreserved Ports</h2>
 		<table class="table table-bordered table-striped">
 			<tr>
 				<th>Type</th>
 				<th>Name</th>
 			</tr>
-			{% for port in nonreserved_ports %}
+			{% for port in unreserved_ports %}
 				<tr>
 					<td>{{port.type}}</td>
 					<td><a href="{{port.get_absolute_url}}">{{port.name}}</a></td>
