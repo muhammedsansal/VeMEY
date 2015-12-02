@@ -68,6 +68,7 @@ class DataCenterRoom(models.Model):
     square_meter = models.SmallIntegerField()
     owner = models.ForeignKey(Company, related_name='dc_owner', null=True, blank=True)
     manager = models.ForeignKey(Company, related_name='dc_manager', null=True, blank=True)
+    customer = models.ForeignKey(Company, related_name='dc_customer', null=True, blank=True)
 
     def get_absolute_url(self):
         return "/datacenterroom/" + str(self.id) + "/"
@@ -99,8 +100,9 @@ class Cabinet(models.Model):
     model = models.CharField(max_length=50, null=True, blank=True)
     owner = models.ForeignKey(Company, related_name='cabinet_owner', null=True, blank=True)
     manager = models.ForeignKey(Company, related_name='cabinet_manager', null=True, blank=True)
+    customer = models.ForeignKey(Company, related_name='cabinet_customer', null=True, blank=True)
     height = models.SmallIntegerField(default=42)
-    date = models.DateField(default=datetime.date.today, null=True, blank=True)
+    date_installed = models.DateField(default=datetime.date.today, null=True, blank=True)
 
     def get_absolute_url(self):
         return "/cabinet/" + str(self.id) + "/"
@@ -123,19 +125,21 @@ class DeviceType(models.Model):
 
     class Meta:
         verbose_name_plural = u"Device Types"
+        ordering = ('name',)
 
 
 class Device(models.Model):
-    name = models.CharField(max_length=50, default="DeviceName")
+    name = models.CharField(max_length=50)
     type = models.ForeignKey(DeviceType)
     manufacturer = models.CharField(max_length=50)
     model = models.CharField(max_length=50)
     serial = models.CharField(max_length=50)
     owner = models.ForeignKey(Company, related_name='device_owner')
     manager = models.ForeignKey(Company, related_name='device_manager')
+    customer = models.ForeignKey(Company, related_name='device_customer', null=True, blank=True)
     cabinet = models.ForeignKey(Cabinet)
-    rack_first = models.SmallIntegerField(default=1)
-    rack_last = models.SmallIntegerField()
+    rack_first = models.SmallIntegerField(default=1,verbose_name = "rack unit first")
+    rack_last = models.SmallIntegerField(default=1,verbose_name = "rack unit last")
 
     def get_absolute_url(self):
         return "/device/" + str(self.id) + "/"
@@ -213,23 +217,37 @@ class Port(models.Model):
         return dedicated_cablings
 
     def find_connection_edge(self):
-        dedicated_cablings = []
+        # start point is self
         target_port = self
-        cabling = self.get_single_cabling(target_port, dedicated_cablings)
-        while (cabling != None):
-            dedicated_cablings.append(cabling)
-            if cabling.edge1 == target_port:
-                target_port = cabling.edge2
-            elif cabling.edge2 == target_port:
-                target_port = cabling.edge1
+
+        # loop over every cabling connected to each other.
+        while True:
+            # at every step, a new cabling is found, dedicated to target port.
+            connection = Connection.objects.get(Q(edge1=target_port) | Q(edge2=target_port))
+
+            # change 'target_port' variable with the port on the other edge of connection
+            if connection.edge1 == target_port:
+                target_port = connection.edge2
+            elif connection.edge2 == target_port:
+                target_port = connection.edge1
             else:
-                pass
+                break
 
+            # if the new target_port has a pair, assign the pair port to 'target_port'
+            # so loop will find the next cabling (connection).
             if target_port.is_paired == True:
-                if target_port.pair_port != None:
-                    target_port = target_port.pair_port
-
-            cabling = self.get_single_cabling(target_port, dedicated_cablings)
+                # pair port is not connected. the loop reached its final destination.
+                # target_port is the last node of connection. let's break the loop.
+                if target_port.pair_port == None:
+                    break
+                # pair port is assigned to target_port. on the next step, the new cabling
+                # will be discovered.
+                target_port = target_port.pair_port
+            # target port is not a paired port. so we reached the last node. if a port is not
+            # paired, the cabling doesnt go on with new connections. it can proceed only to backwards.
+            # so lets break the loop. we find the last node.
+            else:
+                break
 
         return target_port
 

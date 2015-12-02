@@ -20,57 +20,68 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url(r'^accounts/login/$', auth_views.login),
-    url(r'^logout/$'	, logout_page),
+    url(r'^logout/$', logout_page),
     url(r'^admin/', include(admin.site.urls)),
-	url(r'^$', home),
+    url(r'^$', home),
 
-	url(r'^company/$'								, companies),
-	url(r'^company/add/$'							, CompanyCreate.as_view() ,name='company_create'),
-	url(r'^company/(?P<company_id>\d+)/$'					, company_detail),
-	
-	url(r'^country/$'								, countries),
-	url(r'^country/add/$'							, CountryCreate.as_view() ,name='country_create'),
-	url(r'^country/(?P<country_id>\d+)/$'			, country_detail),
-	url(r'^country/(?P<pk>\d+)/update/$'			, CountryUpdate.as_view() ,name='country_update'),
-	url(r'^country/(?P<country_id>\d+)/city/add/$'	, CityCreate.as_view() ,name='city_create'),
+    url(r'^company/$', companies),
+    url(r'^company/add/$', CompanyCreate.as_view(), name='company_create'),
+    url(r'^company/(?P<company_id>\d+)/$', company_detail),
+    url(r'^company/(?P<pk>\d+)/update/$', CompanyUpdate.as_view(), name='company_update'),
 
-	url(r'^city/(?P<city_id>\d+)/$'					, city_detail),
-	url(r'^city/$'					, cities),
-	url(r'^city/(?P<city_id>\d+)/building/add/$'	, BuildingCreate.as_view() ,name='building_create'),
-	
-	url(r'^building/(?P<building_id>\d+)/$'					, building_detail),
-	url(r'^building/$'					, buildings),
-	url(r'^building/(?P<building_id>\d+)/datacenterroom/add/$'	, DataCenterRoomCreate.as_view()
-        ,name='datacenterroom_create'),
-	
-	url(r'^datacenterroom/(?P<dc_id>\d+)/$'								, data_center_room),
-	url(r'^datacenterroom/$'					, datacenterrooms),
-	url(r'^datacenterroom/(?P<dc_id>\d+)/row/add/$'				, RowCreate.as_view() ,name='row_create'),
-	
-	url(r'^row/(?P<row_id>\d+)/$'								, row),
-	url(r'^row/$'					, rows),
-	url(r'^row/(?P<row_id>\d+)/cabinet/add/$'			, CabinetCreate.as_view() ,name='cabinet_create'),
-	
-	url(r'^cabinet/(?P<cabinet_id>\d+)/$'								, cabinet),
-	url(r'^cabinet/$'					, cabinets),
-	url(r'^cabinet/(?P<cabinet_id>\d+)/device/add/$'			, DeviceCreate.as_view() ,name='device_create'),
-	
-	url(r'^device-type/$'								, device_types),
-	url(r'^device-type/add/$'							, DeviceTypeCreate.as_view() ,name='device_type_create'),
-	url(r'^device-type/(?P<device_type_id>\d+)/$'								, device_type),
+    url(r'^country/$', countries),
+    url(r'^country/add/$', CountryCreate.as_view(), name='country_create'),
+    url(r'^country/(?P<country_id>\d+)/$', country_detail),
+    url(r'^country/(?P<pk>\d+)/update/$', CountryUpdate.as_view(), name='country_update'),
+    url(r'^country/(?P<country_id>\d+)/city/add/$', CityCreate.as_view(), name='city_create'),
 
-	url(r'^device/(?P<device_id>\d+)/$'								, device),
-	url(r'^device/$'					, devices),
-	url(r'^device/(?P<device_id>\d+)/port/add/$'			, PortCreate.as_view() ,name='port_create'),
+    url(r'^city/(?P<city_id>\d+)/$', city_detail),
+    url(r'^city/(?P<pk>\d+)/update/$', CityUpdate.as_view(), name='city_update'),
+    url(r'^city/$', cities),
+    url(r'^city/(?P<city_id>\d+)/building/add/$', BuildingCreate.as_view(), name='building_create'),
 
-	url(r'^port-type/$'								, port_types),
-	url(r'^port-type/add/$'							, PortTypeCreate.as_view() ,name='port_type_create'),
-	url(r'^port-type/(?P<port_type_id>\d+)/$'								, port_type),
-	
-	url(r'^port/(?P<port_id>\d+)/$'								, port),
-	url(r'^port/$'								, ports),
+    url(r'^building/(?P<building_id>\d+)/$', building_detail),
+    url(r'^building/(?P<pk>\d+)/update/$', BuildingUpdate.as_view(), name='building_update'),
+    url(r'^building/$', buildings),
+    url(r'^building/(?P<building_id>\d+)/datacenterroom/add/$', DataCenterRoomCreate.as_view()
+        , name='datacenterroom_create'),
+
+    url(r'^datacenterroom/(?P<dc_id>\d+)/$', data_center_room),
+    url(r'^datacenterroom/$', datacenterrooms),
+    url(r'^datacenterroom/(?P<dc_id>\d+)/row/add/$', RowCreate.as_view(), name='row_create'),
+    url(r'^datacenterroom/(?P<pk>\d+)/update/$', DataCenterRoomUpdate.as_view(), name='datacenterroom_update'),
+
+    url(r'^row/(?P<row_id>\d+)/$', row),
+    url(r'^row/$', rows),
+    url(r'^row/(?P<row_id>\d+)/cabinet/add/$', CabinetCreate.as_view(), name='cabinet_create'),
+    url(r'^row/(?P<pk>\d+)/update/$', RowUpdate.as_view(), name='row_update'),
+
+    url(r'^cabinet/(?P<cabinet_id>\d+)/$', cabinet),
+    url(r'^cabinet/$'				, cabinets
+    ),
+    url(r'^cabinet/(?P<cabinet_id>\d+)/device/add/$', DeviceCreate. as_view() ,name='device_create'),
+    url(r'^cabinet/(?P<pk>\d+)/update/$', CabinetUpdate. as_view() ,name='cabinet_update'),
+
+    url(r'^device-type/$',device_types),
+    url(r'^device-type/add/$',DeviceTypeCreate .as_view() ,name='device_type_create'),
+    url(r'^device-type/(?P<pk>\d+)/update/$',DeviceTypeUpdate .as_view() ,name='device_type_update'),
+    url(r'^device-type/(?P<device_type_id>\d+)/$',device_type),
+
+    url(r'^device/(?P<device_id>\d+)/$', device),
+    url(r'^device/$', devices),
+    url(r'^device/(?P<device_id>\d+)/port/add/$', PortCreate.as_view() ,name='port_create'),
+    url(r'^device/(?P<pk>\d+)/update/$', DeviceUpdate.as_view() ,name='device_update'),
+
+    url(r'^port-type/$', port_types),
+    url(r'^port-type/add/$' , PortTypeCreate.as_view() ,name='port_type_create'),
+    url(r'^port-type/(?P<pk>\d+)/update/$' , PortTypeUpdate.as_view(),name='port_type_update'),
+    url(r'^port-type/(?P<port_type_id>\d+)/$', port_type),
+
+    url(r'^port/(?P<port_id>\d+)/$', port),
+    url(r'^port/$', ports),
+    url(r'^port/(?P<pk>\d+ )/update/$', PortUpdate.as_view() ,name='port_update'),
     url(r'^port/(?P<port_id>\d+)/connection/add/$', ConnectionCreate.as_view(), name='connection_create'),
 
-	url(r'^connection/$'								, connections),
-	url(r'^connection/(?P<connection_id>\d+)/$'								, connection),
+    url(r'^connection/$', connections),
+    url(r'^connection/(?P<connection_id>\d+)/$', connection),
 ]

@@ -62,6 +62,7 @@ class DataCenterRoomCreateForm(forms.ModelForm):
         self.fields['square_meter'].widget.attrs.update({'class': 'form-control', })
         self.fields['owner'].widget.attrs.update({'class': 'form-control', })
         self.fields['manager'].widget.attrs.update({'class': 'form-control', })
+        self.fields['customer'].widget.attrs.update({'class': 'form-control', })
 
 
 class RowCreateForm(forms.ModelForm):
@@ -87,8 +88,9 @@ class CabinetCreateForm(forms.ModelForm):
         self.fields['model'].widget.attrs.update({'class': 'form-control', })
         self.fields['owner'].widget.attrs.update({'class': 'form-control', })
         self.fields['manager'].widget.attrs.update({'class': 'form-control', })
+        self.fields['customer'].widget.attrs.update({'class': 'form-control', })
         self.fields['height'].widget.attrs.update({'class': 'form-control', })
-        self.fields['date'].widget.attrs.update({'class': 'form-control', })
+        self.fields['date_installed'].widget.attrs.update({'class': 'form-control', })
 
 
 class DeviceTypeCreateForm(forms.ModelForm):
@@ -117,6 +119,7 @@ class DeviceCreateForm(forms.ModelForm):
         self.fields['serial'].widget.attrs.update({'class': 'form-control', })
         self.fields['owner'].widget.attrs.update({'class': 'form-control', })
         self.fields['manager'].widget.attrs.update({'class': 'form-control', })
+        self.fields['customer'].widget.attrs.update({'class': 'form-control', })
         self.fields['rack_first'].widget.attrs.update({'class': 'form-control', })
         self.fields['rack_last'].widget.attrs.update({'class': 'form-control', })
 

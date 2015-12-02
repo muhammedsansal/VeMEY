@@ -29,7 +29,7 @@
 			</tr>
 			{% for building in buildings %}
 				<tr>
-					<td><a href="{{country.get_absolute_url}}">{{building.name}}</a></td>
+					<td><a href="{{building.get_absolute_url}}">{{building.name}}</a></td>
 					<td>{{building.city.name}}</td>
 					<td>{{building.city.country.name}}</td>
 					<td>{{building.city.country.iso_code}}</td>
