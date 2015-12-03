@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch.dispatcher import receiver
@@ -112,6 +114,62 @@ class Cabinet(models.Model):
 
     class Meta:
         verbose_name_plural = u"Cabinets"
+
+    def save(self):
+
+        is_new_object = False
+
+        old_height = None
+
+        # nesne daha önce kayıtlı mıymış diye bakıyoruz.
+        # böylelikle nesne ilk kez mi yaratılıyor, yoksa
+        # update mi ediliyor anlıyoruz.
+        try:
+            old_obj = Cabinet.objects.get(pk=self.pk)
+            old_height = old_obj.height
+        except Cabinet.DoesNotExist: # yeni nesne
+            is_new_object = True
+        else:
+            is_new_object = False
+
+        # super metodunu burada çağırıyoruz çünkü önce cabinetin save edilmesi
+        # gerekiyor. rackunit'leri yaratırken bu cabinet'i kullanacağız.
+        # update ediliyorsa sorun değil, update işleminden önceki "height"
+        # değerini "old_height"a yazdık.
+        super(Cabinet, self).save()
+
+        # cabinet ilk kez yaratılıyor. "height" field'ında belirtilen kadar
+        # rackunit yaratalım.
+        if is_new_object:
+            # 42u'luk bir cabinet ise for döngüsü range(1,43) için işliyor. yani min 1, max 42.
+            for x in range(1, self.height+1):
+                new_rack_unit = RackUnit(cabinet=self, no=x)
+                new_rack_unit.save()
+
+        # cabinet update ediliyor.
+        else:
+            if old_height:
+                # eski cabinet'in rackunit sayısı update ile değiştirilmiş.
+                # eksik veya fazla rackunitleri tespit edip düzeltme yapmak
+                # lazım. şimdilik "pass" ile geçiştirilsin.
+                if old_height != self.height:
+                    # rackunit sayısı artırılmış.
+                    if old_height < self.height:
+                        pass
+                    # rackunit sayısı azaltılmış.
+                    else:
+                        pass
+
+
+class RackUnit(models.Model):
+    cabinet = models.ForeignKey(Cabinet)
+    no = models.SmallIntegerField(default=0)
+
+    def __str__(self):
+        return "%s %d.rackunit" % (self.cabinet, self.no)
+
+    class Meta:
+        verbose_name_plural = u"Rack Units"
 
 
 class DeviceType(models.Model):

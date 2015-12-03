@@ -32,6 +32,10 @@ class CabinetAdmin(admin.ModelAdmin):
     list_display = ('name', 'row')
 
 
+class RackUnitAdmin(admin.ModelAdmin):
+    list_display = ('cabinet', 'no')
+
+
 class DeviceTypeAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
@@ -59,6 +63,7 @@ admin.site.register(Building, BuildingAdmin)
 admin.site.register(DataCenterRoom, DataCenterRoomAdmin)
 admin.site.register(Row, RowAdmin)
 admin.site.register(Cabinet, CabinetAdmin)
+admin.site.register(RackUnit, RackUnitAdmin)
 admin.site.register(DeviceType, DeviceTypeAdmin)
 admin.site.register(Device, DeviceAdmin)
 admin.site.register(PortType, PortTypeAdmin)
