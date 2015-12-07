@@ -166,10 +166,11 @@ class RackUnit(models.Model):
     no = models.SmallIntegerField(default=0)
 
     def __str__(self):
-        return "%s %d.rackunit" % (self.cabinet, self.no)
+        return "%s-%dU" % (self.cabinet.name, self.no)
 
     class Meta:
         verbose_name_plural = u"Rack Units"
+        ordering = ('-no', )
 
 
 class DeviceType(models.Model):
