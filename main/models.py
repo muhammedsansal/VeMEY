@@ -196,8 +196,9 @@ class Device(models.Model):
     manager = models.ForeignKey(Company, related_name='device_manager')
     customer = models.ForeignKey(Company, related_name='device_customer', null=True, blank=True)
     cabinet = models.ForeignKey(Cabinet)
-    rack_first = models.SmallIntegerField(default=1,verbose_name = "rack unit first")
-    rack_last = models.SmallIntegerField(default=1,verbose_name = "rack unit last")
+    rackunit = models.ManyToManyField(RackUnit)
+    rack_first = models.SmallIntegerField(default=1, verbose_name="rack unit first")
+    rack_last = models.SmallIntegerField(default=1, verbose_name="rack unit last")
 
     def get_absolute_url(self):
         return "/device/" + str(self.id) + "/"

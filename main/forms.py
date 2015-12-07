@@ -107,10 +107,11 @@ class DeviceTypeCreateForm(forms.ModelForm):
 class DeviceCreateForm(forms.ModelForm):
     class Meta:
         model = Device
-        exclude = ['cabinet']
+        exclude = ['cabinet', 'rack_first', 'rack_last']
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
+        rackunit = forms.ModelMultipleChoiceField(queryset=RackUnit.objects.filter(Q(cabinet=cabinet)))
         super(DeviceCreateForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'class': 'form-control', 'autofocus': 'autofocus'})
         self.fields['type'].widget.attrs.update({'class': 'form-control', })
@@ -120,8 +121,10 @@ class DeviceCreateForm(forms.ModelForm):
         self.fields['owner'].widget.attrs.update({'class': 'form-control', })
         self.fields['manager'].widget.attrs.update({'class': 'form-control', })
         self.fields['customer'].widget.attrs.update({'class': 'form-control', })
-        self.fields['rack_first'].widget.attrs.update({'class': 'form-control', })
-        self.fields['rack_last'].widget.attrs.update({'class': 'form-control', })
+        rackunit.widget.attrs.update({'class': 'form-control', })
+        #self.fields['rackunit'].widget.attrs.update({'class': 'form-control', })
+        #self.fields['rack_first'].widget.attrs.update({'class': 'form-control', })
+        #self.fields['rack_last'].widget.attrs.update({'class': 'form-control', })
 
 
 class PortTypeCreateForm(forms.ModelForm):
