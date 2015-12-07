@@ -41,7 +41,7 @@ class DeviceTypeAdmin(admin.ModelAdmin):
 
 
 class DeviceAdmin(admin.ModelAdmin):
-    list_display = ('manufacturer', 'model', 'type', 'serial', 'owner', 'manager', 'cabinet', 'rack_first', 'rack_last')
+    list_display = ('manufacturer', 'model', 'type', 'serial', 'owner', 'manager', 'cabinet')
 
 
 class PortTypeAdmin(admin.ModelAdmin):

@@ -111,8 +111,13 @@ class DeviceCreateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
-        rackunit = forms.ModelMultipleChoiceField(queryset=RackUnit.objects.filter(Q(cabinet=cabinet)))
+        # kwargs içinde gelen 'selected_rack' argümanını pop ediyoruz.
+        # bunu SUPER'den önce yapmamız lazımmış, çünkü SUPER bu argümanı
+        # beklemiyormuş.
+        selected_rack = kwargs.pop('selected_rack', None)
         super(DeviceCreateForm, self).__init__(*args, **kwargs)
+        # daha önce pop ettiğimiz 'selected_rack' argümanını kullanarak RackUnit'leri filtreliyoruz.
+        self.fields['rackunit'].queryset = RackUnit.objects.filter(cabinet=selected_rack)
         self.fields['name'].widget.attrs.update({'class': 'form-control', 'autofocus': 'autofocus'})
         self.fields['type'].widget.attrs.update({'class': 'form-control', })
         self.fields['manufacturer'].widget.attrs.update({'class': 'form-control', })
@@ -121,10 +126,7 @@ class DeviceCreateForm(forms.ModelForm):
         self.fields['owner'].widget.attrs.update({'class': 'form-control', })
         self.fields['manager'].widget.attrs.update({'class': 'form-control', })
         self.fields['customer'].widget.attrs.update({'class': 'form-control', })
-        rackunit.widget.attrs.update({'class': 'form-control', })
-        #self.fields['rackunit'].widget.attrs.update({'class': 'form-control', })
-        #self.fields['rack_first'].widget.attrs.update({'class': 'form-control', })
-        #self.fields['rack_last'].widget.attrs.update({'class': 'form-control', })
+        self.fields['rackunit'].widget.attrs.update({'class': 'form-control', })
 
 
 class PortTypeCreateForm(forms.ModelForm):

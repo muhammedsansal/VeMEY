@@ -424,6 +424,12 @@ class DeviceCreate(SuccessMessageMixin, CreateView):
     template_name = 'device_create.html'
     success_message = u"Created."
 
+    # form'a kwargs ile argüman göndereceğiz. argümanımızın ismi 'selected_rack'.
+    def get_form_kwargs(self, **kwargs):
+        kwargs = super(DeviceCreate, self).get_form_kwargs(**kwargs)
+        kwargs['selected_rack'] = get_object_or_404(Cabinet, pk=self.kwargs['cabinet_id'])
+        return kwargs
+
     def form_valid(self, form):
         #
         # Sets country field of city

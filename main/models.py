@@ -197,8 +197,6 @@ class Device(models.Model):
     customer = models.ForeignKey(Company, related_name='device_customer', null=True, blank=True)
     cabinet = models.ForeignKey(Cabinet)
     rackunit = models.ManyToManyField(RackUnit)
-    rack_first = models.SmallIntegerField(default=1, verbose_name="rack unit first")
-    rack_last = models.SmallIntegerField(default=1, verbose_name="rack unit last")
 
     def get_absolute_url(self):
         return "/device/" + str(self.id) + "/"
@@ -208,7 +206,9 @@ class Device(models.Model):
 
     class Meta:
         verbose_name_plural = u"Devices"
-        ordering = ('-rack_first',)
+        # ordering rack_first ve rack_last'a göre yapılıyordu.
+        # yeni bir ordering belirlemek gerekiyor.
+        # ordering = ()
 
     def find_ports(self):
         device=self
