@@ -107,7 +107,7 @@ class DeviceTypeCreateForm(forms.ModelForm):
 class DeviceCreateForm(forms.ModelForm):
     class Meta:
         model = Device
-        exclude = ['cabinet', 'rack_first', 'rack_last']
+        exclude = ['cabinet']
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
