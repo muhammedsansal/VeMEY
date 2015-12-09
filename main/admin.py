@@ -28,12 +28,12 @@ class RowAdmin(admin.ModelAdmin):
     list_display = ('name', 'datacenterroom')
 
 
-class CabinetAdmin(admin.ModelAdmin):
+class RackAdmin(admin.ModelAdmin):
     list_display = ('name', 'row')
 
 
 class RackUnitAdmin(admin.ModelAdmin):
-    list_display = ('cabinet', 'no')
+    list_display = ('rack', 'no')
 
 
 class DeviceTypeAdmin(admin.ModelAdmin):
@@ -41,7 +41,7 @@ class DeviceTypeAdmin(admin.ModelAdmin):
 
 
 class DeviceAdmin(admin.ModelAdmin):
-    list_display = ('manufacturer', 'model', 'type', 'serial', 'owner', 'manager', 'cabinet')
+    list_display = ('manufacturer', 'model', 'type', 'serial', 'owner', 'manager', 'rack')
 
 
 class PortTypeAdmin(admin.ModelAdmin):
@@ -62,7 +62,7 @@ admin.site.register(City, CityAdmin)
 admin.site.register(Building, BuildingAdmin)
 admin.site.register(DataCenterRoom, DataCenterRoomAdmin)
 admin.site.register(Row, RowAdmin)
-admin.site.register(Cabinet, CabinetAdmin)
+admin.site.register(Rack, RackAdmin)
 admin.site.register(RackUnit, RackUnitAdmin)
 admin.site.register(DeviceType, DeviceTypeAdmin)
 admin.site.register(Device, DeviceAdmin)

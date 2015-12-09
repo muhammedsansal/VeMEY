@@ -96,24 +96,24 @@ class Row(models.Model):
         verbose_name_plural = u"Rows"
 
 
-class Cabinet(models.Model):
+class Rack(models.Model):
     row = models.ForeignKey(Row)
     name = models.CharField(max_length=50)
     model = models.CharField(max_length=50, null=True, blank=True)
-    owner = models.ForeignKey(Company, related_name='cabinet_owner', null=True, blank=True)
-    manager = models.ForeignKey(Company, related_name='cabinet_manager', null=True, blank=True)
-    customer = models.ForeignKey(Company, related_name='cabinet_customer', null=True, blank=True)
+    owner = models.ForeignKey(Company, related_name='rack_owner', null=True, blank=True)
+    manager = models.ForeignKey(Company, related_name='rack_manager', null=True, blank=True)
+    customer = models.ForeignKey(Company, related_name='rack_customer', null=True, blank=True)
     height = models.SmallIntegerField(default=42)
     date_installed = models.DateField(default=datetime.date.today, null=True, blank=True)
 
     def get_absolute_url(self):
-        return "/cabinet/" + str(self.id) + "/"
+        return "/rack/" + str(self.id) + "/"
 
     def __str__(self):
         return "%s - %s" % (self.row, self.name)
 
     class Meta:
-        verbose_name_plural = u"Cabinets"
+        verbose_name_plural = u"Racks"
 
     def save(self):
 
@@ -125,31 +125,31 @@ class Cabinet(models.Model):
         # böylelikle nesne ilk kez mi yaratılıyor, yoksa
         # update mi ediliyor anlıyoruz.
         try:
-            old_obj = Cabinet.objects.get(pk=self.pk)
+            old_obj = Rack.objects.get(pk=self.pk)
             old_height = old_obj.height
-        except Cabinet.DoesNotExist: # yeni nesne
+        except Rack.DoesNotExist: # yeni nesne
             is_new_object = True
         else:
             is_new_object = False
 
-        # super metodunu burada çağırıyoruz çünkü önce cabinetin save edilmesi
-        # gerekiyor. rackunit'leri yaratırken bu cabinet'i kullanacağız.
+        # super metodunu burada çağırıyoruz çünkü önce rack'in save edilmesi
+        # gerekiyor. rackunit'leri yaratırken bu rack'i kullanacağız.
         # update ediliyorsa sorun değil, update işleminden önceki "height"
         # değerini "old_height"a yazdık.
-        super(Cabinet, self).save()
+        super(Rack, self).save()
 
-        # cabinet ilk kez yaratılıyor. "height" field'ında belirtilen kadar
+        # rack ilk kez yaratılıyor. "height" field'ında belirtilen kadar
         # rackunit yaratalım.
         if is_new_object:
-            # 42u'luk bir cabinet ise for döngüsü range(1,43) için işliyor. yani min 1, max 42.
+            # 42u'luk bir rack ise for döngüsü range(1,43) için işliyor. yani min 1, max 42.
             for x in range(1, self.height+1):
-                new_rack_unit = RackUnit(cabinet=self, no=x)
+                new_rack_unit = RackUnit(rack=self, no=x)
                 new_rack_unit.save()
 
-        # cabinet update ediliyor.
+        # rack update ediliyor.
         else:
             if old_height:
-                # eski cabinet'in rackunit sayısı update ile değiştirilmiş.
+                # eski rack'in rackunit sayısı update ile değiştirilmiş.
                 # eksik veya fazla rackunitleri tespit edip düzeltme yapmak
                 # lazım. şimdilik "pass" ile geçiştirilsin.
                 if old_height != self.height:
@@ -162,11 +162,11 @@ class Cabinet(models.Model):
 
 
 class RackUnit(models.Model):
-    cabinet = models.ForeignKey(Cabinet)
+    rack = models.ForeignKey(Rack)
     no = models.SmallIntegerField(default=0)
 
     def __str__(self):
-        return "%s-%dU" % (self.cabinet.name, self.no)
+        return "%s-%dU" % (self.rack.name, self.no)
 
     class Meta:
         verbose_name_plural = u"Rack Units"
@@ -196,14 +196,14 @@ class Device(models.Model):
     owner = models.ForeignKey(Company, related_name='device_owner')
     manager = models.ForeignKey(Company, related_name='device_manager')
     customer = models.ForeignKey(Company, related_name='device_customer', null=True, blank=True)
-    cabinet = models.ForeignKey(Cabinet)
+    rack = models.ForeignKey(Rack)
     rackunit = models.ManyToManyField(RackUnit)
 
     def get_absolute_url(self):
         return "/device/" + str(self.id) + "/"
 
     def __str__(self):
-        return "%s %s %s %s" % (self.cabinet, self.type, self.manufacturer, self.model)
+        return "%s %s %s %s" % (self.rack, self.type, self.manufacturer, self.model)
 
     class Meta:
         verbose_name_plural = u"Devices"

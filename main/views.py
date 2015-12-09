@@ -246,13 +246,13 @@ def data_center_room(request, dc_id):
         rows = Row.objects.filter(datacenterroom=data_center_room)
 
         try:
-            cabinets = Cabinet.objects.filter(row__datacenterroom=data_center_room)
+            racks = Rack.objects.filter(row__datacenterroom=data_center_room)
         except:
-            cabinets = []
+            racks = []
     except:
         rows = []
 
-    variables = RequestContext(request, {'data_center_room': data_center_room, 'rows': rows, 'cabinets': cabinets})
+    variables = RequestContext(request, {'data_center_room': data_center_room, 'rows': rows, 'racks': racks})
 
     return render_to_response('data_center_room.html', variables)
 
@@ -295,19 +295,19 @@ def row(request, row_id):
     row = get_object_or_404(Row, id=int(row_id))
 
     try:
-        cabinets = Cabinet.objects.filter(row=row)
+        racks = Rack.objects.filter(row=row)
     except:
-        cabinets = []
+        racks = []
 
-    variables = RequestContext(request, {'row': row, 'cabinets': cabinets})
+    variables = RequestContext(request, {'row': row, 'racks': racks})
 
     return render_to_response('row.html', variables)
 
 
-class CabinetCreate(SuccessMessageMixin, CreateView):
-    model = Cabinet
-    form_class = CabinetCreateForm
-    template_name = 'cabinet_create.html'
+class RackCreate(SuccessMessageMixin, CreateView):
+    model = Rack
+    form_class = RackCreateForm
+    template_name = 'rack_create.html'
     success_message = u"Created."
 
     def form_valid(self, form):
@@ -315,40 +315,40 @@ class CabinetCreate(SuccessMessageMixin, CreateView):
         # Sets country field of city
         #
         form.instance.row = get_object_or_404(Row, pk=self.kwargs['row_id'])
-        return super(CabinetCreate, self).form_valid(form)
+        return super(RackCreate, self).form_valid(form)
 
 
-class CabinetUpdate(SuccessMessageMixin, UpdateView):
-    model = Cabinet
-    form_class = CabinetCreateForm
-    template_name = 'cabinet_create.html'
+class RackUpdate(SuccessMessageMixin, UpdateView):
+    model = Rack
+    form_class = RackCreateForm
+    template_name = 'rack_create.html'
     success_message = u"Updated."
 
 
 @login_required
-def cabinets(request):
+def racks(request):
     try:
-        cabinets = Cabinet.objects.all()
+        racks = Rack.objects.all()
     except:
-        cabinets = []
+        racks = []
 
-    variables = RequestContext(request, {'cabinets': cabinets, })
+    variables = RequestContext(request, {'racks': racks, })
 
-    return render_to_response('cabinets.html', variables)
+    return render_to_response('racks.html', variables)
 
 
 @login_required
-def cabinet(request, cabinet_id):
-    cabinet = get_object_or_404(Cabinet, id=int(cabinet_id))
+def rack(request, rack_id):
+    rack = get_object_or_404(Rack, id=int(rack_id))
 
     try:
-        devices = Device.objects.filter(cabinet=cabinet)
+        devices = Device.objects.filter(rack=rack)
     except:
         devices = []
 
-    variables = RequestContext(request, {'cabinet': cabinet, 'devices': devices})
+    variables = RequestContext(request, {'rack': rack, 'devices': devices})
 
-    return render_to_response('cabinet.html', variables)
+    return render_to_response('rack.html', variables)
 
 
 @login_required
@@ -427,14 +427,14 @@ class DeviceCreate(SuccessMessageMixin, CreateView):
     # form'a kwargs ile argüman göndereceğiz. argümanımızın ismi 'selected_rack'.
     def get_form_kwargs(self, **kwargs):
         kwargs = super(DeviceCreate, self).get_form_kwargs(**kwargs)
-        kwargs['selected_rack'] = get_object_or_404(Cabinet, pk=self.kwargs['cabinet_id'])
+        kwargs['selected_rack'] = get_object_or_404(Rack, pk=self.kwargs['rack_id'])
         return kwargs
 
     def form_valid(self, form):
         #
         # Sets country field of city
         #
-        form.instance.cabinet = get_object_or_404(Cabinet, pk=self.kwargs['cabinet_id'])
+        form.instance.rack = get_object_or_404(Rack, pk=self.kwargs['rack_id'])
         return super(DeviceCreate, self).form_valid(form)
 
 

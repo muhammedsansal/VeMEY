@@ -76,14 +76,14 @@ class RowCreateForm(forms.ModelForm):
         self.fields['name'].widget.attrs.update({'class': 'form-control', 'autofocus': 'autofocus'})
 
 
-class CabinetCreateForm(forms.ModelForm):
+class RackCreateForm(forms.ModelForm):
     class Meta:
-        model = Cabinet
+        model = Rack
         exclude = ['row']
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
-        super(CabinetCreateForm, self).__init__(*args, **kwargs)
+        super(RackCreateForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'class': 'form-control', 'autofocus': 'autofocus'})
         self.fields['model'].widget.attrs.update({'class': 'form-control', })
         self.fields['owner'].widget.attrs.update({'class': 'form-control', })
@@ -107,7 +107,7 @@ class DeviceTypeCreateForm(forms.ModelForm):
 class DeviceCreateForm(forms.ModelForm):
     class Meta:
         model = Device
-        exclude = ['cabinet']
+        exclude = ['rack']
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
@@ -117,7 +117,7 @@ class DeviceCreateForm(forms.ModelForm):
         selected_rack = kwargs.pop('selected_rack', None)
         super(DeviceCreateForm, self).__init__(*args, **kwargs)
         # daha önce pop ettiğimiz 'selected_rack' argümanını kullanarak RackUnit'leri filtreliyoruz.
-        self.fields['rackunit'].queryset = RackUnit.objects.filter(cabinet=selected_rack)
+        self.fields['rackunit'].queryset = RackUnit.objects.filter(rack=selected_rack)
         self.fields['name'].widget.attrs.update({'class': 'form-control', 'autofocus': 'autofocus'})
         self.fields['type'].widget.attrs.update({'class': 'form-control', })
         self.fields['manufacturer'].widget.attrs.update({'class': 'form-control', })

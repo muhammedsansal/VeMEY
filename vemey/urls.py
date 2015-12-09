@@ -53,14 +53,14 @@ urlpatterns = [
 
     url(r'^row/(?P<row_id>\d+)/$', row),
     url(r'^row/$', rows),
-    url(r'^row/(?P<row_id>\d+)/cabinet/add/$', CabinetCreate.as_view(), name='cabinet_create'),
+    url(r'^row/(?P<row_id>\d+)/rack/add/$', RackCreate.as_view(), name='rack_create'),
     url(r'^row/(?P<pk>\d+)/update/$', RowUpdate.as_view(), name='row_update'),
 
-    url(r'^cabinet/(?P<cabinet_id>\d+)/$', cabinet),
-    url(r'^cabinet/$'				, cabinets
+    url(r'^rack/(?P<rack_id>\d+)/$', rack),
+    url(r'^rack/$'				, racks
     ),
-    url(r'^cabinet/(?P<cabinet_id>\d+)/device/add/$', DeviceCreate. as_view() ,name='device_create'),
-    url(r'^cabinet/(?P<pk>\d+)/update/$', CabinetUpdate. as_view() ,name='cabinet_update'),
+    url(r'^rack/(?P<rack_id>\d+)/device/add/$', DeviceCreate. as_view() ,name='device_create'),
+    url(r'^rack/(?P<pk>\d+)/update/$', RackUpdate. as_view() ,name='rack_update'),
 
     url(r'^device-type/$',device_types),
     url(r'^device-type/add/$',DeviceTypeCreate .as_view() ,name='device_type_create'),
