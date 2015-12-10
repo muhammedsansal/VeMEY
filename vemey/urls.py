@@ -43,8 +43,8 @@ urlpatterns = [
     url(r'^building/(?P<building_id>\d+)/$', building_detail),
     url(r'^building/(?P<pk>\d+)/update/$', BuildingUpdate.as_view(), name='building_update'),
     url(r'^building/$', buildings),
-    url(r'^building/(?P<building_id>\d+)/datacenterroom/add/$', DataCenterRoomCreate.as_view()
-        , name='datacenterroom_create'),
+    url(r'^building/(?P<building_id>\d+)/datacenterroom/add/$', DataCenterRoomCreate.as_view(),
+        name='datacenterroom_create'),
 
     url(r'^datacenterroom/(?P<dc_id>\d+)/$', data_center_room),
     url(r'^datacenterroom/$', datacenterrooms),
@@ -52,29 +52,28 @@ urlpatterns = [
     url(r'^datacenterroom/(?P<pk>\d+)/update/$', DataCenterRoomUpdate.as_view(), name='datacenterroom_update'),
 
     url(r'^rack/(?P<rack_id>\d+)/$', rack),
-    url(r'^rack/$'				, racks
-    ),
-    url(r'^rack/(?P<rack_id>\d+)/device/add/$', DeviceCreate. as_view() ,name='device_create'),
-    url(r'^rack/(?P<pk>\d+)/update/$', RackUpdate. as_view() ,name='rack_update'),
+    url(r'^rack/$', racks),
+    url(r'^rack/(?P<rack_id>\d+)/device/add/$', DeviceCreate. as_view(), name='device_create'),
+    url(r'^rack/(?P<pk>\d+)/update/$', RackUpdate. as_view(), name='rack_update'),
 
-    url(r'^device-type/$',device_types),
-    url(r'^device-type/add/$',DeviceTypeCreate .as_view() ,name='device_type_create'),
-    url(r'^device-type/(?P<pk>\d+)/update/$', DeviceTypeUpdate.as_view() ,name='device_type_update'),
-    url(r'^device-type/(?P<device_type_id>\d+)/$',device_type),
+    url(r'^device-type/$', device_types),
+    url(r'^device-type/add/$', DeviceTypeCreate .as_view(), name='device_type_create'),
+    url(r'^device-type/(?P<pk>\d+)/update/$', DeviceTypeUpdate.as_view(), name='device_type_update'),
+    url(r'^device-type/(?P<device_type_id>\d+)/$', device_type),
 
     url(r'^device/(?P<device_id>\d+)/$', device),
     url(r'^device/$', devices),
-    url(r'^device/(?P<device_id>\d+)/port/add/$', PortCreate.as_view() ,name='port_create'),
-    url(r'^device/(?P<pk>\d+)/update/$', DeviceUpdate.as_view() ,name='device_update'),
+    url(r'^device/(?P<device_id>\d+)/port/add/$', PortCreate.as_view(), name='port_create'),
+    url(r'^device/(?P<pk>\d+)/update/$', DeviceUpdate.as_view(), name='device_update'),
 
     url(r'^port-type/$', port_types),
-    url(r'^port-type/add/$' , PortTypeCreate.as_view() ,name='port_type_create'),
-    url(r'^port-type/(?P<pk>\d+)/update/$' , PortTypeUpdate.as_view(),name='port_type_update'),
+    url(r'^port-type/add/$', PortTypeCreate.as_view(), name='port_type_create'),
+    url(r'^port-type/(?P<pk>\d+)/update/$', PortTypeUpdate.as_view(), name='port_type_update'),
     url(r'^port-type/(?P<port_type_id>\d+)/$', port_type),
 
     url(r'^port/(?P<port_id>\d+)/$', port),
     url(r'^port/$', ports),
-    url(r'^port/(?P<pk>\d+ )/update/$', PortUpdate.as_view() ,name='port_update'),
+    url(r'^port/(?P<pk>\d+ )/update/$', PortUpdate.as_view(), name='port_update'),
     url(r'^port/(?P<port_id>\d+)/connection/add/$', ConnectionCreate.as_view(), name='connection_create'),
 
     url(r'^connection/$', connections),

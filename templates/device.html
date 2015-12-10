@@ -50,10 +50,10 @@
 				<td>{{device.rack}}</td>
 			</tr>
 			<tr>
-				<th>Rack</th>
+				<th>Rack Location</th>
 				<td>
 					{% for rack_unit in device.rackunit.all %}
-					{{ rack_unit }}
+					{{ rack_unit.short_name }}
 					{% if not forloop.last %}, {% endif %}
 					{% endfor %}
 				</td>

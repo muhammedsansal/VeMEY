@@ -154,6 +154,9 @@ class RackUnit(models.Model):
     def __str__(self):
         return "%s-%dU" % (self.rack.name, self.no)
 
+    def short_name(self):
+        return "%dU" % self.no
+
     class Meta:
         verbose_name_plural = u"Rack Units"
         ordering = ('-no', )
