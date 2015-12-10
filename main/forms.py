@@ -65,21 +65,10 @@ class DataCenterRoomCreateForm(forms.ModelForm):
         self.fields['customer'].widget.attrs.update({'class': 'form-control', })
 
 
-class RowCreateForm(forms.ModelForm):
-    class Meta:
-        model = Row
-        exclude = ['datacenterroom']
-
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault('label_suffix', '')
-        super(RowCreateForm, self).__init__(*args, **kwargs)
-        self.fields['name'].widget.attrs.update({'class': 'form-control', 'autofocus': 'autofocus'})
-
-
 class RackCreateForm(forms.ModelForm):
     class Meta:
         model = Rack
-        exclude = ['row']
+        exclude = ['datacenterroom']
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')

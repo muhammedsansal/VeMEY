@@ -1,15 +1,15 @@
-from    django.shortcuts import render
-from    django.contrib import messages
-from    django.http import HttpResponseRedirect, HttpResponse, HttpResponsePermanentRedirect
-from    django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
-from    django.template import RequestContext
-from    django.contrib.auth.decorators import login_required, user_passes_test
-from    django.contrib.auth import logout
-from    django.db.models import Q
-from    django.views.generic.edit import CreateView, UpdateView
-from    django.contrib.messages.views import SuccessMessageMixin
-from    main.models import *
-from    main.forms import *
+from django.shortcuts import render
+from django.contrib import messages
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponsePermanentRedirect
+from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
+from django.template import RequestContext
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth import logout
+from django.db.models import Q
+from django.views.generic.edit import CreateView, UpdateView
+from django.contrib.messages.views import SuccessMessageMixin
+from main.models import *
+from main.forms import *
 
 
 @login_required
@@ -243,65 +243,13 @@ def data_center_room(request, dc_id):
     data_center_room = get_object_or_404(DataCenterRoom, id=int(dc_id))
 
     try:
-        rows = Row.objects.filter(datacenterroom=data_center_room)
-
-        try:
-            racks = Rack.objects.filter(row__datacenterroom=data_center_room)
-        except:
-            racks = []
-    except:
-        rows = []
-
-    variables = RequestContext(request, {'data_center_room': data_center_room, 'rows': rows, 'racks': racks})
-
-    return render_to_response('data_center_room.html', variables)
-
-
-class RowCreate(SuccessMessageMixin, CreateView):
-    model = Row
-    form_class = RowCreateForm
-    template_name = 'row_create.html'
-    success_message = u"Created."
-
-    def form_valid(self, form):
-        #
-        # Sets country field of city
-        #
-        form.instance.datacenterroom = get_object_or_404(DataCenterRoom, pk=self.kwargs['dc_id'])
-        return super(RowCreate, self).form_valid(form)
-
-
-class RowUpdate(SuccessMessageMixin, UpdateView):
-    model = Row
-    form_class = RowCreateForm
-    template_name = 'row_create.html'
-    success_message = u"Updated."
-
-
-@login_required
-def rows(request):
-    try:
-        rows = Row.objects.all()
-    except:
-        rows = []
-
-    variables = RequestContext(request, {'rows': rows, })
-
-    return render_to_response('rows.html', variables)
-
-
-@login_required
-def row(request, row_id):
-    row = get_object_or_404(Row, id=int(row_id))
-
-    try:
-        racks = Rack.objects.filter(row=row)
+        racks = Rack.objects.filter(datacenterroom=data_center_room)
     except:
         racks = []
 
-    variables = RequestContext(request, {'row': row, 'racks': racks})
+    variables = RequestContext(request, {'data_center_room': data_center_room, 'racks': racks})
 
-    return render_to_response('row.html', variables)
+    return render_to_response('data_center_room.html', variables)
 
 
 class RackCreate(SuccessMessageMixin, CreateView):
@@ -314,7 +262,7 @@ class RackCreate(SuccessMessageMixin, CreateView):
         #
         # Sets country field of city
         #
-        form.instance.row = get_object_or_404(Row, pk=self.kwargs['row_id'])
+        form.instance.datacenterroom = get_object_or_404(DataCenterRoom, pk=self.kwargs['dc_id'])
         return super(RackCreate, self).form_valid(form)
 
 
@@ -346,7 +294,12 @@ def rack(request, rack_id):
     except:
         devices = []
 
-    variables = RequestContext(request, {'rack': rack, 'devices': devices})
+    try:
+        rack_units = RackUnit.objects.filter(rack=rack)
+    except:
+        rack_units = []
+
+    variables = RequestContext(request, {'rack': rack, 'devices': devices, 'rack_units': rack_units})
 
     return render_to_response('rack.html', variables)
 
@@ -443,6 +396,24 @@ class DeviceUpdate(SuccessMessageMixin, UpdateView):
     form_class = DeviceCreateForm
     template_name = 'device_create.html'
     success_message = u"Updated."
+
+    def get_object(self, queryset=None):
+        obj = Device.objects.get(id=self.kwargs['pk'])
+        return obj
+
+    # form'a kwargs ile argüman göndereceğiz. argümanımızın ismi 'selected_rack'.
+    def get_form_kwargs(self, **kwargs):
+        kwargs = super(DeviceUpdate, self).get_form_kwargs(**kwargs)
+        kwargs['selected_rack'] = self.get_object(self).rack
+        return kwargs
+
+    def form_valid(self, form):
+        #
+        # Sets country field of city
+        #
+        #form.instance.rack = get_object_or_404(Rack, pk=self.kwargs['rack_id'])
+        #form.instance.rack = .rack
+        return super(DeviceUpdate, self).form_valid(form)
 
 
 @login_required

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Rack {{cabinet.name}}{% endblock %}
+{% block meta %}
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="robots" content="index,follow" />
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+			<h1>Rack: {{rack.name}} <small>{{rack.row}}</small></h1>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<h2>Rack Units and Devices</h2>
+		<table class="table table-bordered table-striped">
+			<tr>
+				<th>No</th>
+				<th>Device</th>
+			</tr>
+			{% for rack_unit in rack_units %}
+				<tr>
+					<td>{{rack_unit.no}}</td>
+					<td>
+						{% for device in rack_unit.device_set.all %}
+						<a href="{{device.get_absolute_url}}">{{device}}</a>
+						{% if not forloop.last %}<br/> {% endif %}
+						{% endfor %}
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+{% endblock %}

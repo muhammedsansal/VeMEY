@@ -25,29 +25,13 @@
 	<div class="col-md-3">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Rows</h3>
+				<h3 class="panel-title">Racks</h3>
 			</div>
 			<div class="panel-body">
-				<p><a class="btn btn-primary btn-sm" href="{{data_center_room.get_absolute_url}}row/add/" role="button">Add Row</a></p>
-				{% if rows %}
-					{% for row in rows %}
-						<p><a href="{{row.get_absolute_url}}">{{row.name}}</a></p>
-					{% endfor %}
-				{% else %}
-					<i>No records</i>
-				{% endif %}
-			</div>
-		</div>
-	</div>
-	<div class="col-md-3">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">Cabinets</h3>
-			</div>
-			<div class="panel-body">
-				{% if cabinets %}
-					{% for cabinet in cabinets %}
-						<p><a href="{{cabinet.get_absolute_url}}">{{cabinet.name}}</a></p>
+				<p><a class="btn btn-primary btn-sm" href="{{data_center_room.get_absolute_url}}rack/add/" role="button">Add Rack</a></p>
+				{% if racks %}
+					{% for rack in racks %}
+						<p><a href="{{rack.get_absolute_url}}">{{rack.name}}</a></p>
 					{% endfor %}
 				{% else %}
 					<i>No records</i>

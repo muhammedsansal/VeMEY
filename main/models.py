@@ -76,28 +76,14 @@ class DataCenterRoom(models.Model):
         return "/datacenterroom/" + str(self.id) + "/"
 
     def __str__(self):
-        return "%s - %s" % (self.building, self.name)
+        return "%s - %s" % (self.building.name, self.name)
 
     class Meta:
         verbose_name_plural = u"Data center rooms"
 
 
-class Row(models.Model):
-    datacenterroom = models.ForeignKey(DataCenterRoom)
-    name = models.CharField(max_length=50)
-
-    def get_absolute_url(self):
-        return "/row/" + str(self.id) + "/"
-
-    def __str__(self):
-        return "%s - %s" % (self.datacenterroom, self.name)
-
-    class Meta:
-        verbose_name_plural = u"Rows"
-
-
 class Rack(models.Model):
-    row = models.ForeignKey(Row)
+    datacenterroom = models.ForeignKey(DataCenterRoom)
     name = models.CharField(max_length=50)
     model = models.CharField(max_length=50, null=True, blank=True)
     owner = models.ForeignKey(Company, related_name='rack_owner', null=True, blank=True)
@@ -110,7 +96,7 @@ class Rack(models.Model):
         return "/rack/" + str(self.id) + "/"
 
     def __str__(self):
-        return "%s - %s" % (self.row, self.name)
+        return "%s - %s" % (self.datacenterroom, self.name)
 
     class Meta:
         verbose_name_plural = u"Racks"
@@ -203,7 +189,7 @@ class Device(models.Model):
         return "/device/" + str(self.id) + "/"
 
     def __str__(self):
-        return "%s %s %s %s" % (self.rack, self.type, self.manufacturer, self.model)
+        return "%s (%s %s %s)" % (self.name, self.type, self.manufacturer, self.model)
 
     class Meta:
         verbose_name_plural = u"Devices"

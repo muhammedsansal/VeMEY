@@ -11,10 +11,11 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="page-header">
-			<h1><small>Device</small> {{device.brand}} {{device.model}} {{device.type}} <small>{{device.cabinet}}</small></h1>
+			<h1><small>Device</small> {{device.brand}} {{device.model}} {{device.type}} <small>{{device.rack}}</small></h1>
 		</div>
 	</div>
 	<div class="col-md-12">
+		<p><a class="btn btn-primary btn-sm" href="{{device.get_absolute_url}}update/" role="button">Update</a></p>
 		<table class="table table-bordered">
 			<tr>
 				<th>Name</th>
@@ -45,12 +46,17 @@
 				<td>{{device.manager}}</td>
 			</tr>
 			<tr>
-				<th>Cabinet</th>
-				<td>{{device.cabinet}}</td>
+				<th>Rack</th>
+				<td>{{device.rack}}</td>
 			</tr>
 			<tr>
 				<th>Rack</th>
-				<td>{{device.rack_first}}-{{device.rack_last}}</td>!
+				<td>
+					{% for rack_unit in device.rackunit.all %}
+					{{ rack_unit }}
+					{% if not forloop.last %}, {% endif %}
+					{% endfor %}
+				</td>
 			</tr>
 		</table>
 	</div>

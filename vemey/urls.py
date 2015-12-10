@@ -48,13 +48,8 @@ urlpatterns = [
 
     url(r'^datacenterroom/(?P<dc_id>\d+)/$', data_center_room),
     url(r'^datacenterroom/$', datacenterrooms),
-    url(r'^datacenterroom/(?P<dc_id>\d+)/row/add/$', RowCreate.as_view(), name='row_create'),
+    url(r'^datacenterroom/(?P<dc_id>\d+)/rack/add/$', RackCreate.as_view(), name='rack_create'),
     url(r'^datacenterroom/(?P<pk>\d+)/update/$', DataCenterRoomUpdate.as_view(), name='datacenterroom_update'),
-
-    url(r'^row/(?P<row_id>\d+)/$', row),
-    url(r'^row/$', rows),
-    url(r'^row/(?P<row_id>\d+)/rack/add/$', RackCreate.as_view(), name='rack_create'),
-    url(r'^row/(?P<pk>\d+)/update/$', RowUpdate.as_view(), name='row_update'),
 
     url(r'^rack/(?P<rack_id>\d+)/$', rack),
     url(r'^rack/$'				, racks

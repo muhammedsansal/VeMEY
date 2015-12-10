@@ -24,12 +24,8 @@ class DataCenterRoomAdmin(admin.ModelAdmin):
     list_display = ('name', 'building')
 
 
-class RowAdmin(admin.ModelAdmin):
-    list_display = ('name', 'datacenterroom')
-
-
 class RackAdmin(admin.ModelAdmin):
-    list_display = ('name', 'row')
+    list_display = ('name', 'datacenterroom')
 
 
 class RackUnitAdmin(admin.ModelAdmin):
@@ -61,7 +57,6 @@ admin.site.register(Country, CountryAdmin)
 admin.site.register(City, CityAdmin)
 admin.site.register(Building, BuildingAdmin)
 admin.site.register(DataCenterRoom, DataCenterRoomAdmin)
-admin.site.register(Row, RowAdmin)
 admin.site.register(Rack, RackAdmin)
 admin.site.register(RackUnit, RackUnitAdmin)
 admin.site.register(DeviceType, DeviceTypeAdmin)
