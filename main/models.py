@@ -194,6 +194,14 @@ class Device(models.Model):
     def __str__(self):
         return "%s (%s %s %s)" % (self.name, self.type, self.manufacturer, self.model)
 
+    def rack_location(self):
+        rack_address_list = []
+        for rackUnit in reversed(self.rackunit.all()):
+            rack_address_list.append(str(rackUnit.no))
+
+        # return "("+ ','.join(rack_address_list) + ")" + "U"
+        return str(rack_address_list[0]) + "-" + str(rack_address_list[-1]) + "U"
+
     class Meta:
         verbose_name_plural = u"Devices"
         # ordering rack_first ve rack_last'a göre yapılıyordu.

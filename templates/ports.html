@@ -38,11 +38,11 @@
 					<td>{{port.type}}</td>
 					<td>{{port.device.manufacturer}} {{port.device.model}}</td>
 					<td>{{port.is_paired}}</td>
-					<td>{{port.device.rackdatacenterroom.name}}</td>
-					<td>{{port.device.rackdatacenterroom.building.name}}</td>
-					<td>{{port.device.rackdatacenterroom.building.city.name}}</td>
-					<td>{{port.device.rackdatacenterroom.building.city.country.name}}</td>
-					<td>{{port.device.rackdatacenterroom.building.city.country.iso_code}}</td>
+					<td>{{port.device.rack.datacenterroom.name}}</td>
+					<td>{{port.device.rack.datacenterroom.building.name}}</td>
+					<td>{{port.device.rack.datacenterroom.building.city.name}}</td>
+					<td>{{port.device.rack.datacenterroom.building.city.country.name}}</td>
+					<td>{{port.device.rack.datacenterroom.building.city.country.iso_code}}</td>
 					<td><a class="btn btn-primary btn-sm" href="{{port.get_absolute_url}}update/" role="button">Update</a></td>
 				</tr>
 			{% endfor %}

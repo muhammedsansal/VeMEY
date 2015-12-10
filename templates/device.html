@@ -51,12 +51,7 @@
 			</tr>
 			<tr>
 				<th>Rack Location</th>
-				<td>
-					{% for rack_unit in device.rackunit.all %}
-					{{ rack_unit.short_name }}
-					{% if not forloop.last %}, {% endif %}
-					{% endfor %}
-				</td>
+				<td>{{device.rack_location}}</td>
 			</tr>
 		</table>
 	</div>

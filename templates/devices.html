@@ -29,8 +29,8 @@
 				<th>Serial</th>
 				<th>Owner</th>
 				<th>Manager</th>
-				<th>Cabinet</th>
 				<th>Rack</th>
+				<th>Rack Unit</th>
 				<th>Data Center Room</th>
 				<th>Building</th>
 				<th>City</th>
@@ -47,13 +47,13 @@
 					<td>{{device.serial}}</td>
 					<td>{{device.owner}}</td>
 					<td>{{device.manager}}</td>
-					<td>{{device.cabinet.name}}</td>
-					<td>{{device.rack_first}}-{{device.rack_last}}</td>
-					<td>{{device.cabinetdatacenterroom.name}}</td>
-					<td>{{device.cabinetdatacenterroom.building.name}}</td>
-					<td>{{device.cabinetdatacenterroom.building.city.name}}</td>
-					<td>{{device.cabinetdatacenterroom.building.city.country.name}}</td>
-					<td>{{device.cabinetdatacenterroom.building.city.country.iso_code}}</td>
+					<td>{{device.rack.name}}</td>
+					<td>{{device.rack_location}}</td>
+					<td>{{device.rack.datacenterroom.name}}</td>
+					<td>{{device.rack.datacenterroom.building.name}}</td>
+					<td>{{device.rack.datacenterroom.building.city.name}}</td>
+					<td>{{device.rack.datacenterroom.building.city.country.name}}</td>
+					<td>{{device.rack.datacenterroom.building.city.country.iso_code}}</td>
 					<td><a class="btn btn-primary btn-sm" href="{{device.get_absolute_url}}update/" role="button">Update</a></td>
 				</tr>
 			{% endfor %}
