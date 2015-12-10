@@ -59,7 +59,7 @@ urlpatterns = [
 
     url(r'^device-type/$',device_types),
     url(r'^device-type/add/$',DeviceTypeCreate .as_view() ,name='device_type_create'),
-    url(r'^device-type/(?P<pk>\d+)/update/$',DeviceTypeUpdate .as_view() ,name='device_type_update'),
+    url(r'^device-type/(?P<pk>\d+)/update/$', DeviceTypeUpdate.as_view() ,name='device_type_update'),
     url(r'^device-type/(?P<device_type_id>\d+)/$',device_type),
 
     url(r'^device/(?P<device_id>\d+)/$', device),

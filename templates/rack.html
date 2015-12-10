@@ -14,6 +14,9 @@
 			<h1>Rack: {{rack.name}} <small>{{rack.row}}</small></h1>
 		</div>
 	</div>
+	<div class="col-md-12" style="margin:10px;">
+		<a class="btn btn-primary btn-sm" href="{{rack.get_absolute_url}}device/add/" role="button">Add Device</a>
+	</div>
 	<div class="col-md-12">
 		<h2>Rack Units and Devices</h2>
 		<table class="table table-bordered table-striped">
