@@ -102,17 +102,16 @@ class Rack(models.Model):
         verbose_name_plural = u"Racks"
 
     def number_of_empty_rack_units(self):
-
         empty_racks = 0
         for x in range(1, self.height+1):
             devices = None
             try:
-                devices = Device.objects.filter(rack=self, rackunit__id=x)
+                devices = Device.objects.filter(rack=self, rackunit__no=x)
             except:
                 pass
 
             if not devices:
-                empty_racks = empty_racks + 1
+                empty_racks += 1
 
         return empty_racks
 
