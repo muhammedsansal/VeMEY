@@ -22,22 +22,31 @@
 			<li class="active"><a href="{{data_center_room.get_absolute_url}}">{{data_center_room.name}}</a></li>
 		</ol>
 	</div>
-	<div class="col-md-3">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">Racks</h3>
-			</div>
-			<div class="panel-body">
-				<p><a class="btn btn-primary btn-sm" href="{{data_center_room.get_absolute_url}}rack/add/" role="button">Add Rack</a></p>
-				{% if racks %}
-					{% for rack in racks %}
-						<p><a href="{{rack.get_absolute_url}}">{{rack.name}}</a></p>
-					{% endfor %}
-				{% else %}
-					<i>No records</i>
-				{% endif %}
-			</div>
-		</div>
+	<div class="col-md-12">
+		<h2>Racks</h2>
+		<p><a class="btn btn-primary btn-sm" href="{{data_center_room.get_absolute_url}}rack/add/" role="button">Add Rack</a></p>
+		<table class="table table-bordered table-striped">
+			<tr>
+				<th>Name</th>
+				<th>Model</th>
+				<th>Owner</th>
+				<th>Manager</th>
+				<th>Customer</th>
+				<th>Height (Empty)</th>
+				<th>Date Installed</th>
+			</tr>
+			{% for rack in racks %}
+				<tr>
+					<td><a href="{{rack.get_absolute_url}}">{{rack.name}}</a></td>
+					<td>{{rack.model}}</td>
+					<td>{{rack.owner}}</td>
+					<td>{{rack.manager}}</td>
+					<td>{{rack.customer}}</td>
+					<td>{{rack.height}} ({{rack.number_of_empty_rack_units}})</td>
+					<td>{{rack.date_installed}}</td>
+				</tr>
+			{% endfor %}
+		</table>
 	</div>
 </div>
 {% endblock %}
