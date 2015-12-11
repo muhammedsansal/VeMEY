@@ -32,7 +32,7 @@
 				<th>Owner</th>
 				<th>Manager</th>
 				<th>Customer</th>
-				<th>Height (Empty)</th>
+				<th>Total / Empty Space</th>
 				<th>Date Installed</th>
 			</tr>
 			{% for rack in racks %}
@@ -42,7 +42,7 @@
 					<td>{{rack.owner}}</td>
 					<td>{{rack.manager}}</td>
 					<td>{{rack.customer}}</td>
-					<td>{{rack.height}} ({{rack.number_of_empty_rack_units}})</td>
+					<td>{{rack.height}}U / {{rack.number_of_empty_rack_units}}U</td>
 					<td>{{rack.date_installed}}</td>
 				</tr>
 			{% endfor %}
