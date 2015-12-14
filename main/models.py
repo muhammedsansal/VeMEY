@@ -208,7 +208,16 @@ class Device(models.Model):
     def __str__(self):
         return "%s (%s %s %s)" % (self.name, self.type, self.manufacturer, self.model)
 
+    class Meta:
+        verbose_name_plural = u"Devices"
+        # ordering rack_first ve rack_last'a göre yapılıyordu.
+        # yeni bir ordering belirlemek gerekiyor.
+        ordering = ('rack', )
+
     def rack_location(self):
+        # {x}-{y}U representation of device's location in rack.
+        # For a device located in 6,7,8,9 numbered rackunits return value is:
+        #   6-9U
         rack_address_list = []
         for rackUnit in reversed(self.rackunit.all()):
             rack_address_list.append(str(rackUnit.no))
@@ -216,11 +225,9 @@ class Device(models.Model):
         # return "("+ ','.join(rack_address_list) + ")" + "U"
         return str(rack_address_list[0]) + "-" + str(rack_address_list[-1]) + "U"
 
-    class Meta:
-        verbose_name_plural = u"Devices"
-        # ordering rack_first ve rack_last'a göre yapılıyordu.
-        # yeni bir ordering belirlemek gerekiyor.
-        # ordering = ()
+    def rack_size(self):
+        # Number of rack units device allocates.
+        return self.rackunit.all().count()
 
     def find_ports(self):
         device=self
