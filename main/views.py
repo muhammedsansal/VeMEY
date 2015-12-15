@@ -468,11 +468,12 @@ class PortCreate(SuccessMessageMixin, CreateView):
     template_name = 'port_create.html'
     success_message = u"Created."
 
+
     def form_valid(self, form):
-        #
-        # Sets country field of city
-        #
-        form.instance.device = get_object_or_404(Device, pk=self.kwargs['device_id'])
+        parent_device = get_object_or_404(Device, pk=self.kwargs['device_id'])
+        form.instance.device = parent_device
+        if parent_device.type.has_paired_ports:
+            form.instance.is_paired = True
         return super(PortCreate, self).form_valid(form)
 
 

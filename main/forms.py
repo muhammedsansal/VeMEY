@@ -132,14 +132,13 @@ class PortTypeCreateForm(forms.ModelForm):
 class PortCreateForm(forms.ModelForm):
     class Meta:
         model = Port
-        exclude = ['device', 'pair_port']
+        exclude = ['device', 'is_paired', 'pair_port']
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
         super(PortCreateForm, self).__init__(*args, **kwargs)
         self.fields['type'].widget.attrs.update({'class': 'form-control', 'autofocus': 'autofocus'})
         self.fields['name'].widget.attrs.update({'class': 'form-control', })
-        self.fields['is_paired'].widget.attrs.update({'class': 'form-control', })
 
 
 class ConnectionCreateForm(forms.ModelForm):

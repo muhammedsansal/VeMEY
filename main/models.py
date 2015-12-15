@@ -178,6 +178,7 @@ class RackUnit(models.Model):
 
 class DeviceType(models.Model):
     name = models.CharField(max_length=50)
+    has_paired_ports = models.BooleanField(default=False)
 
     def get_absolute_url(self):
         return "/device-type/" + str(self.id) + "/"
@@ -222,8 +223,11 @@ class Device(models.Model):
         for rackUnit in reversed(self.rackunit.all()):
             rack_address_list.append(str(rackUnit.no))
 
-        # return "("+ ','.join(rack_address_list) + ")" + "U"
-        return str(rack_address_list[0]) + "-" + str(rack_address_list[-1]) + "U"
+        if rack_address_list:
+            # return "("+ ','.join(rack_address_list) + ")" + "U"
+            return str(rack_address_list[0]) + "-" + str(rack_address_list[-1]) + "U"
+        else:
+            return ""
 
     def rack_size(self):
         # Number of rack units device allocates.
@@ -352,8 +356,7 @@ def port_post_save(sender, **kwargs):
             port.delete()
     elif obj.is_paired:
         if obj.pair_port is None:
-            new_pair_port = Port(type=obj.type, device=obj.device, name=obj.name + " (pair)", is_paired=True,
-                                 pair_port=obj)
+            new_pair_port = Port(type=obj.type, device=obj.device, name=obj.name + " (pair)", is_paired=True, pair_port=obj)
             new_pair_port.save()
             obj.pair_port = new_pair_port
             obj.save()
