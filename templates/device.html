@@ -66,7 +66,7 @@
 				<th>Local Port</th>
 				<th>Connected Port</th>
 			</tr>
-			{% for port in device.find_ports %}   <!--buradaki fonksiyon hatalı, reserved_ports olmalı, ama tabii reserved_ports calismiyor henuz -->
+			{% for port in reserved_ports %}
 				<tr>
 					<td>{{port.type}}</td>
 					<td><a href="{{port.get_absolute_url}}" title="{{port}}">{{port.name}}</a></td>

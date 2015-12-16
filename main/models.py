@@ -234,7 +234,7 @@ class Device(models.Model):
         return self.rackunit.all().count()
 
     def find_ports(self):
-        device=self
+        device = self
         try:
             my_ports = list(Port.objects.filter(Q(device=device)))
         except:
@@ -364,7 +364,7 @@ def port_post_save(sender, **kwargs):
 
 class Connection(models.Model):
     name = models.CharField(max_length=50)
-    edge1 = models.ForeignKey(Port)
+    edge1 = models.ForeignKey(Port, related_name='edge1')
     edge2 = models.ForeignKey(Port, related_name='edge2')
 
     def get_absolute_url(self):
