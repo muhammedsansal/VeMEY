@@ -334,7 +334,12 @@ class DeviceTypeUpdate(SuccessMessageMixin, UpdateView):
 def device_type(request, device_type_id):
     device_type = get_object_or_404(DeviceType, id=int(device_type_id))
 
-    variables = RequestContext(request, {'device_type': device_type, })
+    try:
+        relevant_devices = Device.objects.filter(Q(type=device_type))
+    except:
+        relevant_devices = []
+
+    variables = RequestContext(request, {'device_type': device_type, 'relevant_devices': relevant_devices})
 
     return render_to_response('device_type.html', variables)
 
@@ -446,7 +451,12 @@ class PortTypeUpdate(SuccessMessageMixin, UpdateView):
 def port_type(request, port_type_id):
     port_type = get_object_or_404(PortType, id=int(port_type_id))
 
-    variables = RequestContext(request, {'port_type': port_type, })
+    try:
+        relevant_ports = Port.objects.filter(Q(type=port_type))
+    except:
+        relevant_ports = []
+
+    variables = RequestContext(request, {'port_type': port_type, 'relevant_ports': relevant_ports})
 
     return render_to_response('port_type.html', variables)
 

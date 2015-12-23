@@ -49,6 +49,9 @@ class City(models.Model):
     class Meta:
         verbose_name_plural = u"Cities"
 
+    def location_string(self):
+        return "%s" % self.country.name
+
 
 class Building(models.Model):
     city = models.ForeignKey(City)
@@ -62,6 +65,9 @@ class Building(models.Model):
 
     class Meta:
         verbose_name_plural = u"Buildings"
+
+    def location_string(self):
+        return "%s, %s" % (self.city.name, self.city.location_string())
 
 
 class DataCenterRoom(models.Model):
@@ -80,6 +86,9 @@ class DataCenterRoom(models.Model):
 
     class Meta:
         verbose_name_plural = u"Data center rooms"
+
+    def location_string(self):
+        return "%s, %s" % (self.building.name, self.building.location_string())
 
 
 class Rack(models.Model):
@@ -100,6 +109,9 @@ class Rack(models.Model):
 
     class Meta:
         verbose_name_plural = u"Racks"
+
+    def location_string(self):
+        return "%s, %s" % (self.datacenterroom.name, self.datacenterroom.location_string())
 
     def number_of_empty_rack_units(self):
         empty_racks = 0
@@ -214,6 +226,9 @@ class Device(models.Model):
         # ordering rack_first ve rack_last'a göre yapılıyordu.
         # yeni bir ordering belirlemek gerekiyor.
         ordering = ('rack', )
+
+    def location_string(self):
+        return "%s, %s" % (self.rack.name, self.rack.location_string())
 
     def rack_location(self):
         # {x}-{y}U representation of device's location in rack.

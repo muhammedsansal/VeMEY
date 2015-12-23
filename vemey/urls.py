@@ -53,7 +53,7 @@ urlpatterns = [
 
     url(r'^rack/(?P<rack_id>\d+)/$', rack),
     url(r'^rack/$', racks),
-    url(r'^rack/(?P<rack_id>\d+)/device/add/$', DeviceCreate. as_view(), name='device_create'),
+    url(r'^rack/(?P<rack_id>\d+)/device/add/$', DeviceCreate.as_view(), name='device_create'),
     url(r'^rack/(?P<pk>\d+)/update/$', RackUpdate. as_view(), name='rack_update'),
 
     url(r'^device-type/$', device_types),

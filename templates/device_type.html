@@ -19,5 +19,40 @@
 			<li class="active">{{device_type.name}}</li>
 		</ol>
 	</div>
+    <div class="col-md-12">
+{#		<p><a class="btn btn-primary btn-sm" href="{{device.get_absolute_url}}port/add/" role="button">Add Port</a></p>#}
+		<table class="table table-bordered table-striped">
+			<tr>
+                <th>Name</th>
+				<th>Type</th>
+				<th>Manufacturer</th>
+				<th>Model</th>
+				<th>Serial</th>
+				<th>Owner</th>
+				<th>Manager</th>
+				<th>Rack</th>
+				<th>Rack Unit</th>
+				<th>Data Center Room</th>
+				<th>Update</th>
+			</tr>
+			{% for device in relevant_devices %}
+				<tr>
+					<td><a href="{{device.get_absolute_url}}">{{device.name}}</a></td>
+                    <td>{{device.type}}</td>
+					<td>{{device.manufacturer}}</td>
+					<td>{{device.model}}</td>
+					<td>{{device.serial}}</td>
+					<td>{{device.owner}}</td>
+					<td>{{device.manager}}</td>
+					<td><a href="{{ device.rack.get_absolute_url }}">{{device.rack.name}}</a></td>
+					<td>{{device.rack_location}}</td>
+					<td><a href="{{ device.rack.datacenterroom.get_absolute_url }}"
+                           title="{{ device.rack.location_string }}">
+                        {{device.rack.datacenterroom.name}}</a></td>
+					<td><a class="btn btn-primary btn-sm" href="{{device.get_absolute_url}}update/" role="button">Update</a></td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
 </div>
 {% endblock %}

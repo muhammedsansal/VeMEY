@@ -23,26 +23,24 @@
 			<tr>
 				<th>Name</th>
 				<th>Type</th>
-				<th>Device</th>
+                <th>Device</th>
 				<th>Is Paired</th>
+                <th>Rack</th>
 				<th>Data Center Room</th>
-				<th>Building</th>
-				<th>City</th>
-				<th>Country</th>
-				<th>Country ISO-Code</th>
 				<th>Update</th>
 			</tr>
 			{% for port in ports %}
 				<tr>
-					<td><a href="{{port.get_absolute_url}}">{{port.name}}</a></td>
-					<td>{{port.type}}</td>
-					<td>{{port.device.manufacturer}} {{port.device.model}}</td>
-					<td>{{port.is_paired}}</td>
-					<td>{{port.device.rack.datacenterroom.name}}</td>
-					<td>{{port.device.rack.datacenterroom.building.name}}</td>
-					<td>{{port.device.rack.datacenterroom.building.city.name}}</td>
-					<td>{{port.device.rack.datacenterroom.building.city.country.name}}</td>
-					<td>{{port.device.rack.datacenterroom.building.city.country.iso_code}}</td>
+					<td><a href="{{ port.get_absolute_url }}">{{ port.name }}</a></td>
+					<td><a href="{{ port.type.get_absolute_url }}">{{port.type}}</a></td>
+                    <td><a href="{{ port.device.get_absolute_url }}"
+                           title="{{ port.device.manufacturer }}, {{ port.device.model }}">
+                        {{ port.device.name }}</a></td>
+					<td>{{ port.is_paired }}</td>
+                    <td><a href="{{ port.device.rack.get_absolute_url }}">{{port.device.rack.name}}</a></td>
+					<td><a href="{{ port.device.rack.datacenterroom.get_absolute_url }}"
+                           title="{{ port.device.rack.datacenterroom.location_string }}">
+                           {{port.device.rack.datacenterroom.name}}</a></td>
 					<td><a class="btn btn-primary btn-sm" href="{{port.get_absolute_url}}update/" role="button">Update</a></td>
 				</tr>
 			{% endfor %}

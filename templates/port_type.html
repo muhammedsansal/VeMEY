@@ -19,5 +19,33 @@
 			<li class="active">{{port_type.name}}</li>
 		</ol>
 	</div>
+	<div class="col-md-12">
+		<table class="table table-bordered table-striped">
+			<tr>
+				<th>Name</th>
+				<th>Type</th>
+				<th>Device</th>
+                <th>Vendor</th>
+                <th>Model</th>
+				<th>Is Paired</th>
+				<th>Data Center Room</th>
+				<th>Update</th>
+			</tr>
+			{% for port in relevant_ports %}
+				<tr>
+					<td><a href="{{port.get_absolute_url}}">{{port.name}}</a></td>
+					<td>{{port.type}}</td>
+                    <td><a href="{{ port.device.get_absolute_url }}">{{ port.device.name }}</a></td>
+					<td>{{port.device.manufacturer}}</td>
+                    <td>{{port.device.model}}</td>
+					<td>{{port.is_paired}}</td>
+					<td><a href="{{ port.device.rack.datacenterroom.get_absolute_url }}"
+                           title="{{ port.device.rack.datacenterroom.location_string }}">
+                           {{port.device.rack.datacenterroom.name}}</a></td>
+					<td><a class="btn btn-primary btn-sm" href="{{port.get_absolute_url}}update/" role="button">Update</a></td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
 </div>
 {% endblock %}
