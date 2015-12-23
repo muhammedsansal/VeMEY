@@ -32,7 +32,6 @@
 				<th>Rack</th>
 				<th>Rack Unit</th>
 				<th>Data Center Room</th>
-
 				<th>Update</th>
 			</tr>
 			{% for device in devices %}
@@ -42,8 +41,8 @@
 					<td>{{device.manufacturer}}</td>
 					<td>{{device.model}}</td>
 					<td>{{device.serial}}</td>
-					<td>{{device.owner}}</td>
-					<td>{{device.manager}}</td>
+					<td><a href="{{device.owner.get_absolute_url}}">{{device.owner}}</a></td>
+					<td><a href="{{device.manager.get_absolute_url}}">{{device.manager}}</a></td>
 					<td><a href="{{ device.rack.get_absolute_url }}">{{device.rack.name}}</a></td>
 					<td>{{device.rack_location}}</td>
 					<td><a href="{{ device.rack.datacenterroom.get_absolute_url }}"

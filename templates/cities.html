@@ -22,15 +22,15 @@
 		<table class="table table-bordered table-striped">
 			<tr>
 				<th>Name</th>
-                <th>Country ISO-Code</th>
 				<th>Country</th>
+                <th>Country ISO-Code</th>
 				<th>Update</th>
 			</tr>
 			{% for city in cities %}
 				<tr>
 					<td><a href="{{city.get_absolute_url}}">{{city.name}}</a></td>
-					<td>{{city.country.iso_code}}</td>
-					<td>{{city.country.name}}</td>
+					<td><a href="{{ city.country.get_absolute_url }}">{{city.country.name}}</td>
+                    <td>{{city.country.iso_code}}</td>
 					<td><a class="btn btn-primary btn-sm" href="{{city.get_absolute_url}}update/" role="button">Update</a></td>
 				</tr>
 			{% endfor %}
